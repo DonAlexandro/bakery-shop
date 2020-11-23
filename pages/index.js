@@ -3,7 +3,11 @@ import MainLayout from '../components/MainLayout'
 
 export default function Home() {
 	return (
-		<MainLayout title={'Home'}>
+		<MainLayout
+			title={'Головна'}
+			keywords={['головна', 'головна сторінка', 'home', 'home page']}
+			description={'Головна сторінка сайту міської пекарні'}
+		>
 			<div className={classes.row}>
 				<div className={classes.col}>
 					<div className={classes.fullImg}>

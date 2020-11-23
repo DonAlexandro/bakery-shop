@@ -24,7 +24,11 @@ export default function Menu() {
 	]
 
 	return (
-		<MainLayout title={'Menu'}>
+		<MainLayout
+			title={'Меню'}
+			keywords={['menu', 'меню']}
+			description={'Меню нашої затишної пекарні'}
+		>
 			<div className={classes.page}>
 				<div className={classes.sticker}>
 					<h5>Меню</h5>

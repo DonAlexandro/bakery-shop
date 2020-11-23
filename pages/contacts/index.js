@@ -3,7 +3,11 @@ import classes from '../../styles/contacts.module.scss'
 
 export default function Contacts() {
 	return (
-		<MainLayout>
+		<MainLayout
+			title={`Зв'язатися з нами`}
+			keywords={['contacts', 'контакти', `зворотній зв'язок`]}
+			description={`Зворотній зв'язок з нашою затишною пекарнею`}
+		>
 			<div className={classes.page}>
 				<div className={classes.sticker}>
 					<h5>Контакти</h5>

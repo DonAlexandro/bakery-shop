@@ -1,9 +1,10 @@
 import '../styles/globals.scss'
 import NextNprogress from 'nextjs-progressbar'
+import {AlertProvider} from '../context/alert/AlertProvider';
 
 function MyApp({ Component, pageProps }) {
 	return (
-		<>
+		<AlertProvider>
 			<NextNprogress
 				color="#E87330"
 				startPosition={0.3}
@@ -11,7 +12,7 @@ function MyApp({ Component, pageProps }) {
 				height="3"
 			/>
 			<Component {...pageProps} />
-		</>
+		</AlertProvider>
 	)
 }
 

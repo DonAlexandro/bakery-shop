@@ -3,7 +3,11 @@ import classes from '../../styles/about.module.scss'
 
 export default function About() {
 	return (
-		<MainLayout title={'About'} keywords={['about us', 'про нас', 'about bakery', 'про пекарню']}>
+		<MainLayout
+			title={'Про нас'}
+			keywords={['about us', 'про нас', 'about bakery', 'про пекарню']}
+			description={'Невелика розповідь про нашу пекарню'}
+		>
 			<div className={classes.page}>
 				<div className={classes.sticker}>
 					<h5>Про нас</h5>

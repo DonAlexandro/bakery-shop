@@ -5,7 +5,11 @@ import classes from '../../styles/auth.module.scss'
 
 export default function Login() {
 	return (
-		<MainLayout>
+		<MainLayout
+			title={'Вхід'}
+			keywords={['login', 'вхід']}
+			description={'Сторінка входу в обліковий запис'}
+		>
 			<div className={classes.page}>
 				<div className={classes.sticker}>
 					<h5>Вхід</h5>
