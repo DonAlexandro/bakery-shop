@@ -1,0 +1,56 @@
+@import "common.module";
+
+.cart {
+    margin-top: 40px;
+    width: 100%;
+
+    header {
+        border: 1px solid $brown;
+        font-size: 14px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    .list {
+        border-right: 1px solid $brown;
+        border-left: 1px solid $brown;
+
+        li {
+            @include center-content-by-y;
+
+            padding: 20px;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid $brown;
+            }
+
+            .info {
+                @include center-content-by-y;
+
+                flex-grow: 1;
+
+                .count {
+                    width: 50px;
+                    text-align: center;
+                    margin: 0 3px;
+                }
+
+                .name {
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
+
+    .sum {
+        border-top: 2px solid $dark-brown;
+        border-bottom: 2px solid $dark-brown;
+        width: 100%;
+        margin: 15px 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 0;
+    }
+}

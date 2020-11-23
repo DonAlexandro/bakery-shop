@@ -1,0 +1,13 @@
+.wrapper {
+    background: url('../../public/background.jpg') repeat-y;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+.container {
+    width: 65%;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
