@@ -25,7 +25,11 @@ export default function Cart() {
 	}, [])
 
 	return (
-		<MainLayout title={'Cart'}>
+		<MainLayout
+			title={'Корзина'}
+			keywords={['корзина', 'cart']}
+			description={'Корзина користувача'}
+		>
 			<div className={classes.page}>
 				<div className={classes.sticker}>
 					<h5>Корзина</h5>

@@ -1,24 +1,30 @@
+import {useContext} from 'react'
+import {alertContext} from '../context/alert/alertContext';
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-export default function Alert({text, type}) {
-	if (text !== '') {
+export default function Alert() {
+	const {alert, hideAlert} = useContext(alertContext)
+
+	if (alert) {
 		const MySwal = withReactContent(Swal)
 
 		MySwal.fire({
-			titleText: type === 'success'
+			titleText: alert.type === 'success'
 				? 'Успіх!'
-				: type === 'error' ? 'Помилка...'
+				: alert.type === 'error' ? 'Помилка...'
 					: 'Увага!',
-			text,
-			icon: type,
+			text: alert.text,
+			icon: alert.type,
 			position: 'top-end',
 			toast: true,
 			timer: 3000,
 			timerProgressBar: true,
 			showConfirmButton: false,
 			showCancelButton: true,
-			cancelButtonText: '&times;'
+			cancelButtonText: '&times;',
+			willClose: () => hideAlert(),
+			didClose: () => hideAlert()
 		})
 	}
 

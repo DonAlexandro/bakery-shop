@@ -1,5 +1,5 @@
-@import "utils/_variables";
-@import "utils/_mixins";
+@import "MainLayout/utils/variables";
+@import "MainLayout/utils/mixins";
 
 * {
     box-sizing: border-box;
@@ -31,8 +31,6 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
     line-height: 1;
-    font-family: 'Roboto', sans-serif;
-    color: $dark-brown;
     white-space: pre-line;
 }
 ol, ul {
@@ -52,55 +50,4 @@ table {
 }
 button {
     cursor: pointer;
-}
-input {
-    height: 30px;
-
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    &[type=number] {
-        -moz-appearance:textfield;
-    }
-}
-textarea {
-    min-height: 150px;
-    max-width: 100%;
-}
-a {
-    color: inherit;
-    text-decoration: none;
-    
-    &:hover {
-        text-decoration: underline;
-    }
-}
-@for $i from 1 through 6 {
-    h#{$i} {
-        font-family: Georgia;
-        font-weight: 700;
-        line-height: 1.2;
-    }
-}
-h1, h6, h5 {
-    text-transform: uppercase;
-}
-h1 {
-    font-size: 38px;
-}
-h6 {
-    font-size: 18px;
-}
-h3 {
-    font-size: 35px;
-}
-h5 {
-    font-size: 25px;
-}
-p {
-    font-size: 15px;
-    line-height: 1.5;
 }
