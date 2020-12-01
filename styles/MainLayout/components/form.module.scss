@@ -1,0 +1,31 @@
+@import "../utils/_variables";
+@import "../utils/colors";
+
+.formGroup {
+    margin-bottom: 10px;
+
+    .textHelper {
+        font-size: 12px;
+        color: $grey;
+    }
+}
+
+.formControl {
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    border: 1px solid $dark-brown;
+    background: #fff;
+    color: $dark-brown;
+}
+
+.formInvalid {
+    border: 1px solid $red;
+}
+
+input.formControl {
+    padding-left: 20px;
+}
+
+textarea.formControl {
+    padding: 10px 20px;
+}

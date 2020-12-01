@@ -1,28 +1,29 @@
 @import "common.module";
 
 .row {
-    display: flex;
-    justify-content: space-between;
 
-    .col {
-        width: calc(100% / 3 - 10px);
-        height: 500px;
+    .col3 {
+        @include center-content-by-y;
+
+        height: 470px;
         position: relative;
-        display: flex;
-        align-items: center;
         flex-direction: column;
 
-        .fullImg {
-            @include center-content;
+        img {
+            width: 300px;
+        }
 
+        .fullImg {
             width: 100%;
             height: 100%;
             background: $light-brown;
+            padding: 10px;
         }
 
         .block {
             @include center-content;
 
+            padding: 10px;
             height: calc(50% - 10px);
             background: $light-brown;
             width: 100%;
