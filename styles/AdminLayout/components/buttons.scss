@@ -1,0 +1,51 @@
+@import "../../utils/variables";
+@import "../../utils/functions";
+
+.btn {
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+    padding: 7px 18px;
+    font-size: .8125rem;
+    border-radius: 4px;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 1.25rem;
+
+    .icon + .text, .text + .icon {
+        padding-left: 8px;
+    }
+}
+
+.btnRound {
+    border-radius: 2.125rem;
+}
+
+.btnPrimary {
+    background: $primary-color;
+    border-color: $primary-color;
+
+    * {
+        color: #fff;
+    }
+
+    &:hover, &:active, &:focus {
+        background: darker($primary-color, 2);
+        border-color: darker($primary-color, 2);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 .2rem rgba(151,105,255,0.5);
+    }
+}
+
+.btnOutlineLight {
+    color: $base-color;
+    border: 1px solid $light;
+    background: transparent;
+
+    &:hover, &:active, {
+        background: $light;
+    }
+}

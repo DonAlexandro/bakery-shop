@@ -1,0 +1,76 @@
+@import "shadow";
+@import "grid";
+@import "forms";
+@import "../../utils/colors";
+@import "../../utils/mixins";
+@import "common";
+@import "text";
+@import "dropdown";
+
+.header {
+    background: #fff;
+    padding: 0 22px;
+    position: fixed;
+    top: 0; left: 290px; right: 0;
+    border-bottom: 1px solid $border-color;
+    z-index: 800;
+
+    .headerWrap {
+        display: flex;
+        align-items: center;
+
+        .headerSearch {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+
+            .icon {
+                font-size: 12px;
+            }
+        }
+
+        .headerTools {
+            padding: 14px 4px;
+
+            .userDropdown {
+                padding: 0 10px;
+
+                .userToggle {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+
+                    .userAvatar {
+                        @include center-content;
+
+                        width: 32px;
+                        height: 32px;
+                        font-size: 10px;
+                    }
+
+                    .userInfo {
+                        margin-left: 16px;
+
+                        .userStatus {
+                            padding: 2px 0 6px 0;
+                            color: $purple;
+                            font-size: 11px;
+                            line-height: 1.25rem;
+                        }
+
+                        .userName {
+                            font-size: 13px;
+                            font-weight: 500;
+                            margin-top: 3px;
+
+                            .dropdownIndicator {
+                                font-size: 11px;
+                                margin-left: 4px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

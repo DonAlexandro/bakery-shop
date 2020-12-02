@@ -1,0 +1,100 @@
+@import "styles/utils/mixins";
+@import "styles/utils/variables";
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.rounded {
+    border-radius: 50% !important;
+}
+
+.hoverable {
+    transition: $transition;
+
+    &:hover {
+        box-shadow: 0 2px 15px -4px rgba(133, 79, 255, 0.4);
+    }
+}
+
+.pageHeader {
+    @include center-content-by-y;
+
+    width: 100%;
+    padding-bottom: 1.75rem;
+    justify-content: space-between;
+    z-index: 9998;
+
+    .pageHeaderContent {}
+}
+
+.blockTools {
+    @include center-content-by-y;
+
+    li {
+        padding: .5rem;
+    }
+}
+
+.tbList {
+    width: 100%;
+    color: $soft-color;
+    font-size: 13px;
+
+    li {
+        @include center-content-by-y;
+
+        width: 100%;
+        background: #fff;
+        box-shadow: 0px 1px 3px 0px rgba(54,74,99,0.05);
+        margin-bottom: 8px;
+        border-radius: 4px;
+
+        .colIcon {
+            font-size: 1rem;
+
+            * {
+                font-size: 1rem;
+            }
+        }
+    }
+
+    .tbListHead {
+        padding: .4rem 1.5rem;
+        font-weight: 600;
+
+        .tbCol {
+            padding: 12px 24px 12px 0;
+
+            &:last-child {
+                padding-right: 16px;
+            }
+        }
+    }
+
+    .tbListItem {
+        padding: .5rem 1.5rem;
+
+        .tbCol {
+            padding: 15px 24px 15px 0;
+
+            &:last-child {
+                padding-right: 0px;
+            }
+        }
+
+        .title {
+            color: $secondary-color;
+            font-size: .875rem;
+            font-weight: 700;
+        }
+    }
+}
+
+.borderTransparent {
+    border: none !important;
+}

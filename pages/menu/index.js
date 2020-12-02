@@ -1,22 +1,22 @@
-import classes from '../../styles/menu.module.scss'
-import MainLayout from '../../components/MainLayout';
+import classes from '../../styles/MainLayout/menu.module.scss'
+import MainLayout from '../../components/MainLayout/MainLayout';
 
 export default function Menu() {
 	const goods = [
 		{
-			img: '/thumb-320x240.jpg',
+			img: '/cookies.jpg',
 			title: 'Житньопшеничний хліб',
 			price: '12.5',
 			description: 'Это ваше блюдо, опишите его здесь. Например, перечислите ингредиенты.'
 		},
 		{
-			img: '/thumb-320x240.jpg',
+			img: '/bread.jpg',
 			title: 'Висівковий хліб',
 			price: '10',
 			description: 'Это ваше блюдо, опишите его здесь. Например, перечислите ингредиенты.'
 		},
 		{
-			img: '/thumb-320x240.jpg',
+			img: '/cookies.jpg',
 			title: 'Чорний хліб',
 			price: '15',
 			description: 'Это ваше блюдо, опишите его здесь.'

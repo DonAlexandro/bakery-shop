@@ -1,0 +1,22 @@
+@import "styles/utils/variables";
+
+// MARGINS
+.ml1 {
+    margin-left: $spacer * .25;
+}
+
+.ml2 {
+    margin-left: $spacer * .5;
+}
+
+.mt3 {
+    margin-top: $spacer;
+}
+
+.mt4 {
+    margin-top: $spacer * 1.5;
+}
+
+.mt5 {
+    margin-top: $spacer * 3;
+}

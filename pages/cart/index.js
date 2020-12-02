@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
-import classes from '../../styles/cart.module.scss'
-import MainLayout from '../../components/MainLayout';
+import classes from '../../styles/MainLayout/cart.module.scss'
+import MainLayout from '../../components/MainLayout/MainLayout';
 
 export default function Cart() {
 	const [goodsSum, setGoodsSum] = useState(0)

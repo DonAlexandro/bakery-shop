@@ -1,9 +1,35 @@
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import MainLayout from '../../components/MainLayout'
-import classes from '../../styles/auth.module.scss'
+import {useContext} from 'react'
+import {useRouter} from 'next/router';
+import {useForm} from 'react-hook-form';
+import MainLayout from '../../components/MainLayout/MainLayout'
+import classes from '../../styles/MainLayout/auth.module.scss'
+import {useAuth} from '../../hooks/useAuth';
+import {alertContext} from '../../context/alert/alertContext'
+import {loadingContext} from '../../context/loading/loadingContext';
+import Button from '../../components/Button';
 
 export default function Login() {
+	const router = useRouter()
+	const {register, handleSubmit, errors} = useForm()
+	const {signIn} = useAuth()
+	const {showAlert} = useContext(alertContext)
+	const {loading, showLoading, hideLoading} = useContext(loadingContext)
+
+	const onSubmit = data => {
+		showLoading()
+		return signIn(data).then(response => {
+			if (response.error) {
+				showAlert(response.error.message, 'error')
+				hideLoading()
+			} else {
+				showAlert('Раді вас бачити!', 'success')
+				router.push('/auth/profile')
+				setTimeout(() => hideLoading(), 1500)
+			}
+		})
+	}
+
 	return (
 		<MainLayout
 			title={'Вхід'}
@@ -15,21 +41,48 @@ export default function Login() {
 					<h5>Вхід</h5>
 				</div>
 				<div className={classes.wrapper}>
-					<form className={classes.form}>
-						<input
-							type="email"
-							className={classes.formControl}
-							name="email"
-							placeholder="Ел. адрес"
-						/>
-						<input
-							type="password"
-							className={classes.formControl}
-							name="password"
-							placeholder="Пароль"
-						/>
+					<form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+						<div className={classes.formGroup}>
+							<input
+								type="email"
+								name="email"
+								placeholder="Ел. адрес"
+								className={`${classes.formControl} ${errors.email ? classes.formInvalid : ''}`}
+								ref={register({
+									required: 'Введіть, будь ласка, ваш ел. адрес',
+									pattern: {
+										value: /.+@.+\..+/,
+										message: 'Введіть корректний ел. адрес'
+									}
+								})}
+							/>
+							<span
+								className={`${classes.textHelper} ${classes.red}`}
+							>{errors.email ? errors.email.message : ''}</span>
+						</div>
+						<div className={classes.formGroup}>
+							<input
+								type="password"
+								name="password"
+								placeholder="Пароль"
+								className={`${classes.formControl} ${errors.password ? classes.formInvalid : ''}`}
+								ref={register({
+									required: 'Введіть, будь ласка, ваш пароль',
+									minLength: {
+										value: 8,
+										message: 'Пароль повинен містити не менше 8 символів'
+									}
+								})}
+							/>
+							<span
+								className={`${classes.textHelper} ${classes.red}`}
+							>{errors.password ? errors.password.message : ''}</span>
+						</div>
 						<div className={[classes.dFlex, classes.spaceBetween, classes.alignCenter].join(' ')}>
-							<button className={`${classes.btn} ${classes.btnPrimary}`}>Увійти</button>
+							<Button
+								text={'Увійти'}
+								loading={loading}
+								styles={[classes.btn, classes.btnPrimary]}/>
 							<Link href={'/auth/recovery'}>Забули пароль?</Link>
 						</div>
 					</form>
@@ -40,19 +93,6 @@ export default function Login() {
 								Зареєструватися
 							</a>
 						</Link>
-					</div>
-					<p>Вхід за допомогою соц. мереж</p>
-					<div className={classes.row}>
-						<div className={classes.col2}>
-							<button className={`${classes.btnBlock} ${classes.btnOutlinePrimary}`}>
-								<FontAwesomeIcon icon={['fab', 'google']} />
-							</button>
-						</div>
-						<div className={classes.col2}>
-							<button className={`${classes.btnBlock} ${classes.btnOutlinePrimary}`}>
-								<FontAwesomeIcon icon={['fab', 'instagram']} />
-							</button>
-						</div>
 					</div>
 				</div>
 			</div>

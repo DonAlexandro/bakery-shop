@@ -1,9 +1,66 @@
+@import "../../utils/variables";
+
 .wrapper {
-    background: url('../../public/background.jpg') repeat-y;
+    font-family: 'Roboto', sans-serif;
+    color: $dark-brown;
+    background: url('../../../public/background.jpg') repeat-y;
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
     min-height: 100vh;
+
+    input {
+        width: 100%;
+        height: 30px;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        &[type=number] {
+            -moz-appearance:textfield;
+        }
+    }
+    textarea {
+        min-height: 150px;
+        max-width: 100%;
+    }
+    a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    @for $i from 1 through 6 {
+        h#{$i} {
+            font-family: Georgia;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+    }
+    h1, h6, h5 {
+        text-transform: uppercase;
+    }
+    h1 {
+        font-size: 38px;
+    }
+    h6 {
+        font-size: 18px;
+    }
+    h3 {
+        font-size: 35px;
+    }
+    h5 {
+        font-size: 25px;
+    }
+    p {
+        font-size: 15px;
+        line-height: 1.5;
+    }
 }
 
 .container {

@@ -1,0 +1,71 @@
+@import "../../utils/mixins";
+@import "../../utils/colors";
+@import "text";
+@import "spaces";
+@import "shadow";
+
+.navbar {
+    position: fixed;
+    height: 100%;
+    min-height: 100vh;
+    width: 290px;
+    background: #fff;
+    border-right: 1px solid $border-color;
+
+    .navbarBrand {
+        font-size: 1.2rem;
+        padding: 14px 24px;
+
+        a {
+            @include center-content-by-y;
+        }
+    }
+
+    .navbarElements {
+        margin-top: 11px;
+
+        .neItem {
+            padding: 4px 12px;
+
+            .neLink {
+                @include center-content-by-y;
+
+                transition: $transition;
+                padding: 10px 28px 10px 12px;
+                border-radius: 5px;
+
+                &.neLinkActive {
+                    background: $grey100;
+
+                    .neLinkIcon, .neLinkText {
+                        color: $primary-color !important;
+                    }
+                }
+
+                &:hover {
+                    background: $grey100;
+
+                    .neLinkIcon, .neLinkText {
+                        color: $primary-color !important;
+                    }
+                }
+
+                .neLinkIcon {
+                    transition: $transition;
+                }
+
+                .neLinkIcon {
+                    width: 36px;
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    font-size: 24px;
+                }
+
+                .neLinkText {
+                    flex-grow: 1;
+                }
+            }
+        }
+    }
+}
+

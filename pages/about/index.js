@@ -1,5 +1,5 @@
-import MainLayout from '../../components/MainLayout'
-import classes from '../../styles/about.module.scss'
+import MainLayout from '../../components/MainLayout/MainLayout'
+import classes from '../../styles/MainLayout/about.module.scss'
 
 export default function About() {
 	return (
@@ -11,6 +11,9 @@ export default function About() {
 			<div className={classes.page}>
 				<div className={classes.sticker}>
 					<h5>Про нас</h5>
+				</div>
+				<div className={classes.imgWrapper}>
+					<img src="/about.jpg" alert="About us"/>
 				</div>
 				<p>Являясь всего лишь частью общей картины, сделанные на базе интернет-аналитики выводы будут указаны как претенденты на роль ключевых факторов. Сделанные на базе интернет-аналитики выводы, вне зависимости от их уровня, должны быть смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности. Повседневная практика показывает, что внедрение современных методик создаёт необходимость включения в производственный план целого ряда внеочередных мероприятий с учётом комплекса модели развития.</p>
 			</div>

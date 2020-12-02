@@ -1,0 +1,69 @@
+@import "../../utils/variables";
+@import "../../utils/functions";
+@import "grid";
+
+.wrapper {
+    display: flex;
+    color: $base-color;
+    background: #F5F6FA;
+    height: 1000px;
+
+    * {
+        font-family: 'Rubik', sans-serif;
+    }
+
+    main {
+        flex-grow: 1;
+        margin-left: 290px;
+        margin-top: 85px;
+        padding: 32px 22px;
+    }
+
+    a {
+        color: $primary-color;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+            color: darker($primary-color, 2)
+        }
+    }
+
+    @for $i from 1 through 6 {
+        h#{$i} {
+            color: $secondary-color;
+        }
+    }
+
+    h1 {
+        font-size: 3.75rem;
+        font-weight: 400;
+        letter-spacing: -0.04rem;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        letter-spacing: -0.03rem;
+    }
+
+    h3 {
+        font-size: 2rem;
+        font-weight: 500;
+        letter-spacing: -0.03rem;
+    }
+
+    h4 {
+        font-size: 1.5rem;
+        letter-spacing: -0.02rem;
+    }
+
+    h5 {
+        font-size: 1.25rem;
+        letter-spacing: -0.01rem;
+    }
+
+    h6 {
+        font-size: 1.05rem;
+        letter-spacing: -0.01rem;
+    }
+}

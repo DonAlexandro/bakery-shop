@@ -3,3 +3,25 @@
 .red {
     color: $red !important;
 }
+
+.textDark {
+    color: $dark-color !important;
+}
+
+.textSoft {
+    color: $soft-color !important;
+}
+
+.textBase {
+    color: $base-color;
+}
+
+.bgPrimary {
+    color: #fff;
+    background: $primary-color;
+}
+
+.bgPurple {
+    color: #fff;
+    background: $purple;
+}

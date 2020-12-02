@@ -1,5 +1,5 @@
-import MainLayout from '../../components/MainLayout';
-import classes from '../../styles/contacts.module.scss'
+import MainLayout from '../../components/MainLayout/MainLayout';
+import classes from '../../styles/MainLayout/contacts.module.scss'
 
 export default function Contacts() {
 	return (

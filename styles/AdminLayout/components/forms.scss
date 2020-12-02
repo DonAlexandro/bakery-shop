@@ -1,0 +1,49 @@
+@import "styles/utils/variables";
+
+.formControlWrap {
+    position: relative;
+
+    .formIcon {
+        position: absolute;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        top: 50%;
+        transform: translateY(-50%);
+        width: calc(1rem + 24px);
+        height: calc(1rem + 24px);
+        color: $soft-color;
+        font-size: 12px;
+
+        &.formIconRight {
+            left: auto;
+            right: -1px;
+        }
+    }
+
+    .formIconRight + .formControl {
+        padding-left: 1rem;
+        padding-right: calc(1rem + 24px);
+    }
+}
+
+.formControl {
+    display: block;
+    width: 100%;
+    color: $grey600;
+    padding: 7px 16px;
+    line-height: 1.25rem;
+    height: 36px;
+    border-radius: 4px;
+    background: #fff;
+    border: 1px solid $grey300;
+
+    &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba(133,79,255,0.1);
+    }
+
+    &::placeholder {
+        color: $soft-color;
+    }
+}

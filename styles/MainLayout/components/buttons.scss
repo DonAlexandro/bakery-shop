@@ -1,6 +1,6 @@
-@import "../utils/_variables";
-@import "../utils/_mixins";
-@import "../utils/_functions";
+@import "../../utils/variables";
+@import "../../utils/mixins";
+@import "../../utils/functions";
 
 .btn, .btnBlock {
     @include center-content;

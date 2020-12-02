@@ -1,0 +1,158 @@
+@import "../../utils/colors";
+@import "../../utils/mixins";
+
+.dropdown {
+    position: relative;
+
+    .btnTrigger {
+        position: relative;
+        z-index: 1;
+    }
+
+    .btnTrigger + .dropdownMenuRight {
+        margin: -0.6rem 0;
+    }
+
+    .dropdownMenu {
+        background: #fff;
+        position: absolute;
+        top: 100%;
+        left: 0px;
+        margin: 11px -6px 0 0;
+        border-radius: 4px;
+        border: 1px solid $border-color;
+
+        &.dropdownMenuSm {
+            min-width: 210px;
+            max-width: 210px;
+            margin-right: 16px;
+            font-size: .8125rem;
+            z-index: 700;
+
+            .dropdownInner {
+
+                .linksList {
+                    padding: .5rem 0;
+
+                    li {
+                        margin-bottom: 0;
+                    }
+
+                    a {
+                        @include center-content-by-y;
+
+                        width: 100%;
+                        padding: .625rem 1.125rem;
+                        line-height: 1.3rem;
+                        text-decoration: none;
+                        transition: $transition;
+
+                        &:hover {
+                            background: $lighter;
+
+                            * {
+                                color: $primary-color;
+                            }
+                        }
+
+                        * {
+                            color: $base-color;
+                            transition: $transition;
+                        }
+
+                        .icon {
+                            width: 28px;
+                        }
+
+                        .text {
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.dropdownMenuMd {
+            max-width: 280px;
+            min-width: 280px;
+            z-index: 800;
+
+            .dropdownInner {
+                padding: 0 1.75rem;
+
+                &:nth-child(even) {
+                    border-top: 1px solid $border-color;
+                    border-bottom: 1px solid $border-color;
+                }
+
+                &.userCardWrap {
+                    @include center-content-by-y;
+
+                    padding-top: 1.25rem;
+                    padding-bottom: 1.25rem;
+                    background: $lighter;
+
+                    .userAvatar {
+                        @include center-content;
+
+                        width: 40px;
+                        height: 40px;
+                        font-size: .8rem;
+                    }
+
+                    .userInfo {
+                        margin-left: 16px;
+
+                        .leadText {
+                            color: $grey600;
+                            font-size: .875rem;
+                            font-weight: 500;
+                            line-height: 23px;
+                        }
+
+                        .subText {
+                            font-weight: 300;
+                            color: $grey500;
+                            font-size: 12px;
+                            line-height: 19px;
+                        }
+                    }
+                }
+
+                .linksList {
+                    padding: .75rem 0;
+
+                    a {
+                        @include center-content-by-y;
+
+                        color: $base-color;
+                        padding: .575rem 0;
+                        transition: $transition;
+                        text-decoration: none;
+                        width: 100%;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: $primary-color;
+                        }
+
+                        .icon {
+                            display: inline-block;
+                            width: 24px;
+                        }
+
+                        .text {
+                            font-size: 13px;
+                            line-height: 1.4rem;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.dropdownMenuRight {
+            left: auto;
+            right: 0;
+        }
+    }
+}
