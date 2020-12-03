@@ -3,3 +3,17 @@
     padding: 0 14px;
     margin: 0 auto;
 }
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .col12 {
+        width: 100%;
+    }
+
+    .col6 {
+        width: 45%;
+    }
+}

@@ -1,0 +1,33 @@
+@import "../../utils/variables";
+@import "shadow";
+
+.toggleSlide {
+    transition: $toggleSlideTransition;
+    width: calc(100vw - 290px);
+    height: calc(100vh - 64px);
+    position: fixed;
+    top: 64px;
+    left: 290px;
+    z-index: -1;
+
+    &.toggleActive {
+        z-index: 900 !important;
+        background: rgba(0, 0, 0, .2);
+
+        .slideWrapper {
+            transform: translate(0) !important;
+        }
+    }
+
+    .slideWrapper {
+        transform: translateX(100%);
+        right: 0;
+        position: fixed;
+        width: 400px;
+        height: 100%;
+        padding: 1.5rem;
+        background: #fff;
+        transition: $toggleSlideTransition;
+        border-top: 1px solid $light;
+    }
+}

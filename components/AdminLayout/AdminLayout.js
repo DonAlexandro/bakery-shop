@@ -51,6 +51,7 @@ export default function AdminLayout({children, title = 'Сторінка'}) {
 		<>
 			<Head>
 				<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+				<link rel="icon" href="/admin_logo.ico" />
 				<title>{title} | Адмін Панель</title>
 			</Head>
 			<div className={classes.wrapper}>

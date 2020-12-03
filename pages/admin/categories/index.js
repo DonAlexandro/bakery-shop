@@ -1,9 +1,17 @@
 import Link from 'next/link'
+import {useState} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import AdminLayout from '../../../components/AdminLayout/AdminLayout'
 import classes from '../../../styles/AdminLayout/categories.module.scss'
+import CategoryForm from '../../../components/AdminLayout/CategoryForm';
 
 export default function Categories() {
+	const [active, setActive] = useState(false)
+
+	const hideSlide = e => {
+		if (e.target.classList.contains('hide-slide')) setActive(false)
+	}
+
 	return (
 		<AdminLayout>
 			<div className={classes.pageHeader}>
@@ -25,12 +33,13 @@ export default function Categories() {
 							</div>
 						</li>
 						<li>
-							<Link href={'/admin/goods/create'}>
-								<a className={`${classes.btn} ${classes.btnPrimary}`}>
-									<span className={classes.icon}><FontAwesomeIcon icon="plus"/></span>
-									<span className={classes.text}>Додати категорію</span>
-								</a>
-							</Link>
+							<button
+								className={`${classes.btn} ${classes.btnPrimary}`}
+								onClick={() => setActive(prev => !prev)}
+							>
+								<span className={classes.icon}><FontAwesomeIcon icon="plus"/></span>
+								<span className={classes.text}>Додати категорію</span>
+							</button>
 						</li>
 					</ul>
 				</div>
@@ -92,8 +101,8 @@ export default function Categories() {
 					</div>
 				</li>
 				<li className={`${classes.tbListItem} ${classes.hoverable}`}>
-					<div className={`${classes.tbCol}`}>1</div>
-					<div className={`${classes.tbCol} ${classes.grow1}`}><span className={classes.title}>Хліб</span></div>
+					<div className={`${classes.tbCol}`}>2</div>
+					<div className={`${classes.tbCol} ${classes.grow1}`}><span className={classes.title}>Булки</span></div>
 					<div className={`${classes.tbCol} ${classes.colIcon}`}>
 						<div className={classes.dropdown}>
 							<button className={[
@@ -143,6 +152,14 @@ export default function Categories() {
 					</div>
 				</li>
 			</ul>
+			<div
+				onClick={hideSlide}
+				className={`hide-slide ${classes.toggleSlide} ${active && classes.toggleActive}`}
+			>
+				<div className={classes.slideWrapper}>
+					<CategoryForm />
+				</div>
+			</div>
 		</AdminLayout>
 	)
 }
