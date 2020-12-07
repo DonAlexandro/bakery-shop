@@ -3,8 +3,9 @@ import NextNprogress from 'nextjs-progressbar'
 import {AlertProvider} from '../context/alert/AlertProvider'
 import {AuthProvider} from '../hooks/useAuth'
 import {LoadingProvider} from '../context/loading/LoadingProvider'
+import {wrapper} from '../redux/store'
 
-function MyApp({ Component, pageProps }) {
+function MyApp({Component, pageProps}) {
 	return (
 		<AuthProvider>
 			<AlertProvider>
@@ -22,4 +23,4 @@ function MyApp({ Component, pageProps }) {
 	)
 }
 
-export default MyApp
+export default wrapper.withRedux(MyApp)

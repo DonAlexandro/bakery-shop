@@ -8,6 +8,11 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+
+    > div {
+        margin-bottom: 1.25rem;
+    }
 
     .col12 {
         width: 100%;

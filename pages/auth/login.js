@@ -7,7 +7,7 @@ import classes from '../../styles/MainLayout/auth.module.scss'
 import {useAuth} from '../../hooks/useAuth';
 import {alertContext} from '../../context/alert/alertContext'
 import {loadingContext} from '../../context/loading/loadingContext';
-import Button from '../../components/Button';
+import Button from '../../components/MainLayout/Button';
 
 export default function Login() {
 	const router = useRouter()
@@ -41,7 +41,7 @@ export default function Login() {
 					<h5>Вхід</h5>
 				</div>
 				<div className={classes.wrapper}>
-					<form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+					<form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
 						<div className={classes.formGroup}>
 							<input
 								type="email"

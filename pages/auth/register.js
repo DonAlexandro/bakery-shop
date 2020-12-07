@@ -7,7 +7,7 @@ import classes from '../../styles/MainLayout/auth.module.scss'
 import Alert from '../../components/Alert';
 import {alertContext} from '../../context/alert/alertContext';
 import {useAuth} from '../../hooks/useAuth';
-import Button from '../../components/Button';
+import Button from '../../components/MainLayout/Button';
 import {loadingContext} from '../../context/loading/loadingContext';
 
 export default function Register() {

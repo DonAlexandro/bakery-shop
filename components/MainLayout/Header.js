@@ -1,4 +1,3 @@
-import {useState} from 'react'
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,7 +6,6 @@ import Image from 'next/image';
 import {useAuth} from '../../hooks/useAuth';
 
 export default function Header() {
-	const [dropdown, setDropdown] = useState(false)
 	const router = useRouter()
 	const {user, signOut} = useAuth()
 
@@ -38,7 +36,7 @@ export default function Header() {
 						<Link href={'/auth/profile'}><a>
 							<Image
 								src={user.photoURL || '/thumb-user.jpg'}
-								alert={user.email}
+								alt={user.email}
 								width={30}
 								height={30}
 							></Image>

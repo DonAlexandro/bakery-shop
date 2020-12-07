@@ -37,8 +37,8 @@ export default function Navbar() {
 				</Link>
 			</div>
 			<ul className={`${classes.navbarElements}`}>
-				{links.map(link =>
-					<li className={classes.neItem}>
+				{links.map((link,index) =>
+					<li className={classes.neItem} key={index}>
 						<Link href={link.href}>
 							<a
 								className={[

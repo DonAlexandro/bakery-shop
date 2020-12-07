@@ -1,0 +1,20 @@
+@import "buttons";
+@import "grid";
+@import "forms";
+
+.formContent {
+
+    .blockHead {
+        padding-bottom: 1.5rem;
+
+        .blockHeadTitle {
+            margin-bottom: .7rem;
+            font-weight: 600;
+            color: $grey600;
+        }
+
+        .blockHeadSubtitle {
+            font-size: .875rem;
+        }
+    }
+}

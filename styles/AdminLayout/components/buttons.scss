@@ -16,6 +16,11 @@
     .icon + .text, .text + .icon {
         padding-left: 8px;
     }
+
+    &:disabled {
+        opacity: .65;
+        cursor: default;
+    }
 }
 
 .btnRound {

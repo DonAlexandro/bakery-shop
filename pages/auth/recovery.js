@@ -7,7 +7,7 @@ import {useAuth} from '../../hooks/useAuth';
 import {alertContext} from '../../context/alert/alertContext'
 import Link from 'next/link';
 import {loadingContext} from '../../context/loading/loadingContext';
-import Button from '../../components/Button';
+import Button from '../../components/MainLayout/Button';
 
 export default function Recovery() {
 	const {register, handleSubmit, errors} = useForm()

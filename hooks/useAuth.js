@@ -1,5 +1,5 @@
 import {useContext, createContext, useState, useEffect} from 'react'
-import {auth, db, firebase} from '../config/firebaseConfig';
+import {auth, db} from '../config/firebaseConfig';
 
 const authContext = createContext({users: {}})
 const {Provider} = authContext
@@ -39,7 +39,7 @@ export const useAuthProvider = () => {
 	}
 
 	const signIn = ({email, password}) => {
-		return auth.signInWithEmailAndPassword(email, password)
+		return auth.signInWithEmailAndPassword(email.trim(), password.trim())
 			.then(response => {
 				setUser(response)
 				getUserAdditionalData(response)
