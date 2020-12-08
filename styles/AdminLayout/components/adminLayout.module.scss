@@ -1,11 +1,11 @@
 @import "../../utils/variables";
 @import "../../utils/functions";
-@import "grid";
+@import "grid.module";
 
 .wrapper {
     display: flex;
     color: $base-color;
-    background: #F5F6FA;
+    background: $lighter;
     min-height: 100vh;
 
     * {
@@ -65,5 +65,9 @@
     h6, .h6 {
         font-size: 1.05rem;
         letter-spacing: -0.01rem;
+    }
+
+    select {
+        appearance: none;
     }
 }

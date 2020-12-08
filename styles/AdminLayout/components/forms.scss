@@ -68,3 +68,20 @@
         color: $soft-color;
     }
 }
+
+.formControlSelect {
+    position: relative;
+
+    &::after {
+        content: '›';
+        position: absolute;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%) rotate(90deg);
+        width: calc(1rem + 12px);
+        height: calc(1rem + 12px);
+    }
+}

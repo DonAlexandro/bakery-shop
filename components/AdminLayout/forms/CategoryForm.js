@@ -1,13 +1,14 @@
 import {useContext} from 'react';
 import {useForm} from 'react-hook-form';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import classes from '../../styles/AdminLayout/components/rsForm.module.scss'
-import {alertContext} from '../../context/alert/alertContext';
-import {useCategory} from '../../hooks/useCategory';
-import {loadingContext} from '../../context/loading/loadingContext';
-import Button from './Button';
+import classes from '../../../styles/AdminLayout/components/rsForm.module.scss'
+import button from '../../../styles/AdminLayout/components/rsForm.module.scss'
+import {alertContext} from '../../../context/alert/alertContext';
+import {useCategory} from '../../../hooks/useCategory';
+import {loadingContext} from '../../../context/loading/loadingContext';
+import Button from '../Button';
 import {useDispatch} from 'react-redux';
-import {addCategory, editCategory} from '../../redux/actions';
+import {addCategory, editCategory} from '../../../redux/actions';
+import FormLayout from './FormLayout';
 
 export default function CategoryForm({updateActive, category}) {
 	const {register, handleSubmit, errors, reset} = useForm()
@@ -49,11 +50,10 @@ export default function CategoryForm({updateActive, category}) {
 	}
 
 	return (
-		<div className={classes.formContent}>
-			<div className={classes.blockHead}>
-				<h5 className={classes.blockHeadTitle}>Нова категорія</h5>
-				<p className={classes.blockHeadSubtitle}>Впишіть інформацію і створіть категорію</p>
-			</div>
+		<FormLayout
+			title="Нова категорія"
+			subtitle="Впишіть інформацію і створіть нову категорію"
+		>
 			<form className={classes.row} onSubmit={handleSubmit(onSubmit)}>
 				<div className={classes.col12}>
 					{category && <input
@@ -78,14 +78,12 @@ export default function CategoryForm({updateActive, category}) {
 				</div>
 				<div className={classes.col12}>
 					<Button
-						styles={[classes.btn, classes.btnPrimary]}
+						color="primary"
 						loading={loading}
-					>
-						<span className={classes.icon}><FontAwesomeIcon icon={category ? 'edit' : 'plus'} /></span>
-						<span className={classes.text}>{category ? 'Оновити' : 'Створити'}</span>
-					</Button>
+						icon={category ? 'edit' : 'plus'}
+					>{category ? 'Оновити' : 'Створити'}</Button>
 				</div>
 			</form>
-		</div>
+		</FormLayout>
 	)
 }

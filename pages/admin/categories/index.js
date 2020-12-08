@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import AdminLayout from '../../../components/AdminLayout/AdminLayout'
 import classes from '../../../styles/AdminLayout/categories.module.scss'
 import common from '../../../styles/AdminLayout/components/common.module.scss'
-import CategoryForm from '../../../components/AdminLayout/CategoryForm';
+import CategoryForm from '../../../components/AdminLayout/forms/CategoryForm';
 import {db} from '../../../config/firebaseConfig';
 import TableList from '../../../components/AdminLayout/TableList';
 import PageHeader from '../../../components/AdminLayout/PageHeader';
@@ -17,6 +17,7 @@ import Alert from '../../../components/Alert';
 import DropdownLayout from '../../../components/AdminLayout/dropdown/DropdownLayout';
 import SmallMenu from '../../../components/AdminLayout/dropdown/SmallMenu';
 import LinksListItem from '../../../components/AdminLayout/dropdown/LinksListItem';
+import Button from '../../../components/AdminLayout/Button';
 
 export default function Categories() {
 	const [active, setActive] = useState(false)
@@ -77,6 +78,11 @@ export default function Categories() {
 
 	const onSearch = data => dispatch(searchCategory(data.search))
 
+	const listHeader = [
+		{text: '#', grow: false},
+		{text: 'Назва категорії', grow: true}
+	]
+
 	return (
 		<AdminLayout title={'Категорії'}>
 			<Alert />
@@ -97,16 +103,14 @@ export default function Categories() {
 					</form>
 				</li>
 				<li>
-					<button
-						className={`${classes.btn} ${classes.btnPrimary}`}
-						onClick={() => openSlider(null)}
-					>
-						<span className={classes.icon}><FontAwesomeIcon icon="plus"/></span>
-						<span className={classes.text}>Додати категорію</span>
-					</button>
+					<Button
+						icon="plus"
+						color="primary"
+						clickAct={() => openSlider(null)}
+					>Додати категорію</Button>
 				</li>
 			</PageHeader>
-			<TableList>
+			<TableList listHeader={listHeader}>
 				{fetchedCategories.map((cat, index) =>
 					<li className={classes.tbListItem} key={cat.id}>
 						<div className={classes.tbCol}>{index + 1}</div>

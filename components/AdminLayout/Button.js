@@ -1,10 +1,18 @@
-export default function Button({children, styles, loading}) {
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import button from '../../styles/AdminLayout/components/buttons.module.scss';
+
+export default function Button({children, color, loading = false, icon, clickAct}) {
 	return (
 		<button
-			className={styles.join(' ')}
+			onClick={clickAct}
+			className={[
+				button.btn,
+				color === 'primary' && button.btnPrimary
+			].join(' ')}
 			disabled={loading}
 		>
-			{loading ? 'Завантаження...' : children}
+			{icon && <span className={button.icon}>{!loading && <FontAwesomeIcon icon={icon} />}</span>}
+			<span className={button.text}>{loading ? 'Завантаження...' : children}</span>
 		</button>
 	)
 }
