@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import {useContext} from 'react'
+import {useContext, useEffect} from 'react'
 import {useRouter} from 'next/router';
 import {useForm} from 'react-hook-form';
 import MainLayout from '../../components/MainLayout/MainLayout'
@@ -8,6 +8,7 @@ import {useAuth} from '../../hooks/useAuth';
 import {alertContext} from '../../context/alert/alertContext'
 import {loadingContext} from '../../context/loading/loadingContext';
 import Button from '../../components/MainLayout/Button';
+import Alert from '../../components/Alert';
 
 export default function Login() {
 	const router = useRouter()
@@ -15,6 +16,10 @@ export default function Login() {
 	const {signIn} = useAuth()
 	const {showAlert} = useContext(alertContext)
 	const {loading, showLoading, hideLoading} = useContext(loadingContext)
+
+	useEffect(() => {
+		router.prefetch('/auth/profile')
+	}, [])
 
 	const onSubmit = data => {
 		showLoading()
@@ -36,6 +41,7 @@ export default function Login() {
 			keywords={['login', 'вхід']}
 			description={'Сторінка входу в обліковий запис'}
 		>
+			<Alert />
 			<div className={classes.page}>
 				<div className={classes.sticker}>
 					<h5>Вхід</h5>

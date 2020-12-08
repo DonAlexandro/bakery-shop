@@ -2,6 +2,7 @@ import {useContext, useEffect, useState} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import AdminLayout from '../../../components/AdminLayout/AdminLayout'
 import classes from '../../../styles/AdminLayout/categories.module.scss'
+import common from '../../../styles/AdminLayout/components/common.module.scss'
 import CategoryForm from '../../../components/AdminLayout/CategoryForm';
 import {db} from '../../../config/firebaseConfig';
 import TableList from '../../../components/AdminLayout/TableList';
@@ -12,11 +13,15 @@ import {wrapper} from '../../../redux/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {setCategories, removeCategory, searchCategory} from '../../../redux/actions';
 import {useForm} from 'react-hook-form';
+import Alert from '../../../components/Alert';
+import DropdownLayout from '../../../components/AdminLayout/dropdown/DropdownLayout';
+import SmallMenu from '../../../components/AdminLayout/dropdown/SmallMenu';
+import LinksListItem from '../../../components/AdminLayout/dropdown/LinksListItem';
 
 export default function Categories() {
 	const [active, setActive] = useState(false)
 	const [category, setCategory] = useState(null)
-	const [localCategories, setLocalCategories] = useState([])
+	const [fetchedCategories, setFetchedCategories] = useState([])
 
 	const {deleteCategory} = useCategory()
 	const {showAlert} = useContext(alertContext)
@@ -26,55 +31,55 @@ export default function Categories() {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
+		// Якщо користувач починає шукати
 		if (foundCategories.length !== 0) {
-			setLocalCategories(foundCategories)
+			setFetchedCategories(foundCategories)
 		} else {
-			setLocalCategories(categories)
+			setFetchedCategories(categories)
 		}
 	}, [categories, foundCategories])
 
 	const requestEnd = (message, type, index) => {
 		showAlert(message, type)
-		showDropdown(index)
+		toggleDropdown(index)
 	}
 
 	const removeCat = (id, index) => {
-		return deleteCategory(id).then(response => {
-			if (response?.error) {
-				requestEnd(response.error.message, 'error', index)
-			} else {
-				requestEnd('Категорію успішно видалено!', 'success', index)
-				dispatch(removeCategory(id))
-			}
-		})
+		if (confirm('Відновити цю категорію буде не можливо. Продовжити?')) {
+			return deleteCategory(id).then(response => {
+				if (response?.error) {
+					requestEnd(response.error.message, 'error', index)
+				} else {
+					requestEnd('Категорію було видалено', 'warning', index)
+					dispatch(removeCategory(id))
+				}
+			})
+		}
+
+		return
 	}
 
-	const hideSlide = e => {
-		if (e.target.classList.contains('hide-slide')) setActive(false)
-	}
+	const hideSlide = e => e.target.classList.contains('hide-slide') && setActive(false)
 
 	const openSlider = (category, index = null) => {
 		setActive(true)
 		setCategory(category)
 
-		if (index) showDropdown(index)
+		if (index) toggleDropdown(index)
 	}
 
-	const updateActive = value => {
-		setActive(value)
-	}
+	const updateActive = value => setActive(value)
 
-	const showDropdown = index => {
+	const toggleDropdown = index => {
 		const dropdown = document.querySelector(`#dropdown-${index}`)
-		dropdown.classList.toggle(classes.hide)
+		dropdown.classList.toggle(common.hide)
 	}
 
-	const onSearch = data => {
-		dispatch(searchCategory(data.search))
-	}
+	const onSearch = data => dispatch(searchCategory(data.search))
 
 	return (
-		<AdminLayout>
+		<AdminLayout title={'Категорії'}>
+			<Alert />
 			<PageHeader title="Категорії">
 				{/*ADDITIONAL HEADER TOOLS*/}
 				<li>
@@ -102,50 +107,33 @@ export default function Categories() {
 				</li>
 			</PageHeader>
 			<TableList>
-				{localCategories.map((cat, index) =>
-					<li className={classes.tbListItem} key={cat.id || index}>
+				{fetchedCategories.map((cat, index) =>
+					<li className={classes.tbListItem} key={cat.id}>
 						<div className={classes.tbCol}>{index + 1}</div>
 						<div className={`${classes.tbCol} ${classes.grow1}`}>
 							<span className={classes.title}>{cat.name}</span>
 						</div>
 						<div className={`${classes.tbCol} ${classes.colIcon}`}>
 							{/*---DROPDOWN---*/}
-							<div className={classes.dropdown}>
+							<DropdownLayout>
 								<button className={[
 									classes.btn,
 									classes.btnRound,
 									classes.btnOutlineLight,
 									classes.borderTransparent,
 									classes.btnTrigger
-								].join(' ')} onClick={() => showDropdown(index)}><FontAwesomeIcon icon="ellipsis-h" /></button>
-								<div
-									className={[
-										classes.dropdownMenu,
-										classes.dropdownMenuRight,
-										classes.dropdownMenuSm,
-										classes.shadowLg,
-										classes.hide
-									].join(' ')}
-									id={`dropdown-${index}`}
-								>
-									<div className={classes.dropdownInner}>
-										<ul className={classes.linksList}>
-											<li>
-												<a onClick={() => openSlider(cat, index)}>
-													<span className={classes.icon}><FontAwesomeIcon icon="edit" /></span>
-													<span className={classes.text}>Редагувати категорію</span>
-												</a>
-											</li>
-											<li>
-												<a onClick={() => removeCat(cat.id, index)}>
-													<span className={classes.icon}><FontAwesomeIcon icon="trash-alt" /></span>
-													<span className={classes.text}>Видалити категорію</span>
-												</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
+								].join(' ')} onClick={() => toggleDropdown(index)}><FontAwesomeIcon icon="ellipsis-h" /></button>
+								<SmallMenu menuId={`dropdown-${index}`}>
+									<LinksListItem
+										action={() => openSlider(cat, index)}
+										icon={'edit'}
+									>Редагувати категорію</LinksListItem>
+									<LinksListItem
+										action={() => removeCat(cat.id, index)}
+										icon={'trash-alt'}
+									>Видалити категорію</LinksListItem>
+								</SmallMenu>
+							</DropdownLayout>
 							{/*--------------*/}
 						</div>
 					</li>

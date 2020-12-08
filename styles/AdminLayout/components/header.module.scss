@@ -1,11 +1,11 @@
-@import "shadow";
+@import "shadow.module";
 @import "grid";
 @import "forms";
 @import "../../utils/colors";
 @import "../../utils/mixins";
-@import "common";
+@import "common.module";
 @import "text";
-@import "dropdown";
+@import "dropdown.module";
 
 .header {
     background: #fff;

@@ -1,5 +1,5 @@
 @import "../../utils/variables";
-@import "shadow";
+@import "shadow.module";
 
 .toggleSlide {
     transition: $toggleSlideTransition;

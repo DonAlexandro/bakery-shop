@@ -10,7 +10,7 @@ import {useDispatch} from 'react-redux';
 import {addCategory, editCategory} from '../../redux/actions';
 
 export default function CategoryForm({updateActive, category}) {
-	const {register, handleSubmit, errors} = useForm()
+	const {register, handleSubmit, errors, reset} = useForm()
 	const {showAlert} = useContext(alertContext)
 	const {loading, showLoading, hideLoading} = useContext(loadingContext)
 	const {createCategory, updateCategory} = useCategory()
@@ -23,7 +23,7 @@ export default function CategoryForm({updateActive, category}) {
 		hideLoading()
 	}
 
-	const onSubmit = data => {
+	const onSubmit = (data, e) => {
 		showLoading()
 
 		if (category) {
@@ -33,6 +33,7 @@ export default function CategoryForm({updateActive, category}) {
 				} else {
 					requestEnd('Категорію успішно оновлено!', 'success')
 					dispatch(editCategory(data))
+					e.target.reset()
 				}
 			})
 		}
