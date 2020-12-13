@@ -1,11 +1,11 @@
-import {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import AdminLayout from '../../../components/AdminLayout/AdminLayout'
 import classes from '../../../styles/AdminLayout/categories.module.scss'
 import common from '../../../styles/AdminLayout/components/common.module.scss'
 import CategoryForm from '../../../components/AdminLayout/forms/CategoryForm';
 import {db} from '../../../config/firebaseConfig';
-import TableList from '../../../components/AdminLayout/TableList';
+import TableList, {ListBody} from '../../../components/AdminLayout/TableList/index';
 import PageHeader from '../../../components/AdminLayout/PageHeader';
 import {useCategory} from '../../../hooks/useCategory';
 import {alertContext} from '../../../context/alert/alertContext';
@@ -14,10 +14,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setCategories, removeCategory, searchCategory} from '../../../redux/actions';
 import {useForm} from 'react-hook-form';
 import Alert from '../../../components/Alert';
-import DropdownLayout from '../../../components/AdminLayout/dropdown/DropdownLayout';
-import SmallMenu from '../../../components/AdminLayout/dropdown/SmallMenu';
-import LinksListItem from '../../../components/AdminLayout/dropdown/LinksListItem';
 import Button from '../../../components/AdminLayout/Button';
+import CategoryItem from '../../../components/AdminLayout/TableList/CategoryItem';
 
 export default function Categories() {
 	const [active, setActive] = useState(false)
@@ -79,8 +77,9 @@ export default function Categories() {
 	const onSearch = data => dispatch(searchCategory(data.search))
 
 	const listHeader = [
-		{text: '#', grow: false},
-		{text: 'Назва категорії', grow: true}
+		{text: '#'},
+		{text: 'Назва категорії'},
+		{text: ''},
 	]
 
 	return (
@@ -111,37 +110,15 @@ export default function Categories() {
 				</li>
 			</PageHeader>
 			<TableList listHeader={listHeader}>
-				{fetchedCategories.map((cat, index) =>
-					<li className={classes.tbListItem} key={cat.id}>
-						<div className={classes.tbCol}>{index + 1}</div>
-						<div className={`${classes.tbCol} ${classes.grow1}`}>
-							<span className={classes.title}>{cat.name}</span>
-						</div>
-						<div className={`${classes.tbCol} ${classes.colIcon}`}>
-							{/*---DROPDOWN---*/}
-							<DropdownLayout>
-								<button className={[
-									classes.btn,
-									classes.btnRound,
-									classes.btnOutlineLight,
-									classes.borderTransparent,
-									classes.btnTrigger
-								].join(' ')} onClick={() => toggleDropdown(index)}><FontAwesomeIcon icon="ellipsis-h" /></button>
-								<SmallMenu menuId={`dropdown-${index}`}>
-									<LinksListItem
-										action={() => openSlider(cat, index)}
-										icon={'edit'}
-									>Редагувати категорію</LinksListItem>
-									<LinksListItem
-										action={() => removeCat(cat.id, index)}
-										icon={'trash-alt'}
-									>Видалити категорію</LinksListItem>
-								</SmallMenu>
-							</DropdownLayout>
-							{/*--------------*/}
-						</div>
-					</li>
-				)}
+				<ListBody>
+					{fetchedCategories.map((cat, index) =>
+						<CategoryItem
+							key={cat.id}
+							index={index}
+							category={cat}
+						></CategoryItem>
+					)}
+				</ListBody>
 			</TableList>
 			<div
 				onClick={hideSlide}

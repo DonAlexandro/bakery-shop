@@ -11,7 +11,7 @@ import {addCategory, editCategory} from '../../../redux/actions';
 import FormLayout from './FormLayout';
 
 export default function CategoryForm({updateActive, category}) {
-	const {register, handleSubmit, errors, reset} = useForm()
+	const {register, handleSubmit, errors} = useForm()
 	const {showAlert} = useContext(alertContext)
 	const {loading, showLoading, hideLoading} = useContext(loadingContext)
 	const {createCategory, updateCategory} = useCategory()
@@ -24,7 +24,7 @@ export default function CategoryForm({updateActive, category}) {
 		hideLoading()
 	}
 
-	const onSubmit = (data, e) => {
+	const onSubmit = (data) => {
 		showLoading()
 
 		if (category) {
@@ -34,7 +34,6 @@ export default function CategoryForm({updateActive, category}) {
 				} else {
 					requestEnd('Категорію успішно оновлено!', 'success')
 					dispatch(editCategory(data))
-					e.target.reset()
 				}
 			})
 		}

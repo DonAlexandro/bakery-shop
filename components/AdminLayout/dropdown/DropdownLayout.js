@@ -7,3 +7,8 @@ export default function DropdownLayout({children, moreClasses}) {
 		</div>
 	)
 }
+
+export function toggleDropdown({index}) {
+	const dropdown = document.querySelector(`#dropdown-${index}`)
+	dropdown.classList.toggle(classes.hide)
+}

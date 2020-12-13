@@ -7,6 +7,21 @@
     color: $base-color;
     background: $lighter;
     min-height: 100vh;
+    scrollbar-color: $scrollbar-color transparent;
+    scrollbar-width: thin;
+
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: $scrollbar-color;
+        border-radius: 10px;
+
+        &:hover {
+            background: darker($scrollbar-color, 1);
+        }
+    }
 
     * {
         font-family: 'Rubik', sans-serif;
@@ -69,5 +84,9 @@
 
     select {
         appearance: none;
+    }
+
+    textarea {
+        min-height: 95px;
     }
 }
