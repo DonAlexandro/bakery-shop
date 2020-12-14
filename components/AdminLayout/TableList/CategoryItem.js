@@ -23,14 +23,14 @@ export default function CategoryItem({category, index}) {
 						classes.borderTransparent,
 						classes.btnTrigger
 					].join(' ')} onClick={() => setDropdown(prev => !prev)}><FontAwesomeIcon icon="ellipsis-h" /></button>
-					<SmallMenu>
+					{dropdown && <SmallMenu>
 						<LinksListItem
 							icon={'edit'}
 						>Редагувати категорію</LinksListItem>
 						<LinksListItem
 							icon={'trash-alt'}
 						>Видалити категорію</LinksListItem>
-					</SmallMenu>
+					</SmallMenu>}
 				</DropdownLayout>
 				{/*--------------*/}
 			</ListColIcon>

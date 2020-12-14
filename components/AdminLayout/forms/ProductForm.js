@@ -84,7 +84,7 @@ export default function ProductForm({toggleSidebar, product}) {
 		}
 	}
 
-	const allowedImageExt = ['image/png', 'image/jpeg', 'image/webp']
+	const allowedImageExt = process.env.ALLOWED_IMAGE_EXTENSIONS
 
 	return (
 		<FormLayout
@@ -108,7 +108,7 @@ export default function ProductForm({toggleSidebar, product}) {
 								type="text"
 								name="name"
 								className={classes.formControl}
-								defaultValue={product && product.name}
+								defaultValue={product ? product.name : ''}
 								ref={register({
 									required: 'Введіть, будь ласка, назву товару'
 								})}
@@ -123,7 +123,7 @@ export default function ProductForm({toggleSidebar, product}) {
 								name="description"
 								id="description"
 								className={classes.formControl}
-								defaultValue={product && product.description}
+								defaultValue={product ? product.description : ''}
 								ref={register({
 									required: 'Введіть, будь ласка, опис товару',
 									minLength: {
@@ -142,10 +142,14 @@ export default function ProductForm({toggleSidebar, product}) {
 								id="price"
 								type="number"
 								name="price"
-								defaultValue={product && product.price}
+								defaultValue={product ? product.price : ''}
 								className={classes.formControl}
 								ref={register({
-									required: 'Введіть, будь ласка, ціну товару'
+									required: 'Введіть, будь ласка, ціну товару',
+									min: {
+										value: 1,
+										message: 'Товар не може коштувати менше одніє гривні'
+									}
 								})}
 							/>
 							{errors.price && <span className={classes.invalidFeedback}>{errors.price.message}</span>}
@@ -158,10 +162,14 @@ export default function ProductForm({toggleSidebar, product}) {
 								id="amount"
 								type="number"
 								name="amount"
-								defaultValue={product && product.amount}
+								defaultValue={product ? product.amount : ''}
 								className={classes.formControl}
 								ref={register({
-									required: 'Введіть, будь ласка, кількість товару'
+									required: 'Введіть, будь ласка, кількість товару',
+									min: {
+										value: 0,
+										message: 'На складі не може бути менше 0 товарів'
+									}
 								})}
 							/>
 							{errors.amount && <span className={classes.invalidFeedback}>{errors.amount.message}</span>}
@@ -174,7 +182,7 @@ export default function ProductForm({toggleSidebar, product}) {
 								name="category"
 								id="category"
 								styles={[classes.formControl]}
-								value={product && product.category}
+								value={product ? product.category : ''}
 								onRef={register({
 									required: 'Виберіть, будь ласка, категорію'
 								})}

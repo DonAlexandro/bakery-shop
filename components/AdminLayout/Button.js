@@ -2,12 +2,16 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import button from '../../styles/AdminLayout/components/buttons.module.scss';
 
 export default function Button({children, color, loading = false, icon, clickAct}) {
+	const colors = {
+		primary: button.btnPrimary
+	}
+
 	return (
 		<button
 			onClick={clickAct}
 			className={[
 				button.btn,
-				color === 'primary' && button.btnPrimary
+				colors[color] || button.btnPrimary
 			].join(' ')}
 			disabled={loading}
 		>

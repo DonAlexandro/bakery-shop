@@ -30,6 +30,8 @@ export default function ProductItem({product, index, categories, actions}) {
 					{dropdown && <SmallMenu right>
 						<LinksListItem
 							icon={'image'}
+							toggleDropdown={toggleDropdown}
+							action={actions.image}
 						>Оновити зображення</LinksListItem>
 						<LinksListItem
 							icon={'edit'}

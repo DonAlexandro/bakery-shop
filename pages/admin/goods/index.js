@@ -15,12 +15,15 @@ import ProductItem from '../../../components/AdminLayout/TableList/ProductItem';
 import {useProduct} from '../../../hooks/useProduct';
 import {alertContext} from '../../../context/alert/alertContext';
 import {useImage} from '../../../hooks/useImage';
+import Modal from '../../../components/AdminLayout/Modal';
+import ProductImage from '../../../components/AdminLayout/modals/ProductImage';
 
 export default function Goods() {
 	const pageName = 'Товари'
 
 	// Локальні стейти
 	const [sidebar, setSidebar] = useState(false)
+	const [modal, setModal] = useState(false)
 	const [pickedProduct, setPickedProduct] = useState(null)
 
 	// Хуки
@@ -33,15 +36,21 @@ export default function Goods() {
 
 	// Функції
 	const toggleSidebar = value => setSidebar(value)
+	const toggleModal = value => setModal(value)
 
 	const createProduct = () => {
 		setPickedProduct(null)
 		toggleSidebar(true)
 	}
 
-	const editProduct = (product) => {
+	const editProduct = product => {
 		setPickedProduct(product)
 		toggleSidebar(true)
+	}
+
+	const editImage = product => {
+		setPickedProduct(product)
+		toggleModal(true)
 	}
 
 	const removeProd = product => {
@@ -107,6 +116,7 @@ export default function Goods() {
 							index={index}
 							categories={categories}
 							actions={{
+								image: () => editImage(product),
 								edit: () => editProduct(product),
 								delete: () => removeProd(product)
 							}}
@@ -123,6 +133,9 @@ export default function Goods() {
 					product={pickedProduct}
 				></ProductForm>
 			</RightSidebar>
+			{modal && <Modal toggleModal={toggleModal} title={pickedProduct.name}>
+				<ProductImage product={pickedProduct} toggleModal={toggleModal}/>
+			</Modal>}
 		</AdminLayout>
 	)
 }

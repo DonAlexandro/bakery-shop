@@ -62,7 +62,7 @@ export default function CategoryForm({updateActive, category}) {
 						ref={register}
 					/>}
 					<div className={classes.formGroup}>
-						<label htmlFor="name">Назва категорії</label>
+						<label htmlFor="name" className={classes.label}>Назва категорії</label>
 						<input
 							type="text"
 							className={classes.formControl}

@@ -1,0 +1,58 @@
+@import "styles/utils/variables";
+@import "styles/utils/mixins";
+
+.modal {
+    @include center-content;
+
+    z-index: 9999;
+    padding-right: 16px;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba($base-color, 0.5);
+
+    .modalContent {
+        width: 520px;
+        background: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 1px 0px rgba(82,100,132,0.2), 0px 8px 15.52px 0.48px rgba(28,43,70,0.15);
+        min-height: 40px;
+        overflow: hidden;
+
+        .modalHeader {
+            @include center-content-by-y;
+
+            width: 100%;
+            border-bottom: 1px solid $grey300;
+            padding-left: 24px;
+
+            h5 {
+                flex-grow: 1;
+                font-weight: 600;
+            }
+
+            .closeModal {
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 16px 24px;
+            }
+        }
+
+        .modalBody {
+            padding: 24px;
+
+            p {
+                font-size: .875rem;
+                line-height: 1.65;
+            }
+        }
+
+        .modalFooter {
+            border-top: 1px solid $grey300;
+            background: $light;
+            padding: 16px 24px;
+        }
+    }
+}
