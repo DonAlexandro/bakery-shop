@@ -6,13 +6,16 @@ import SmallMenu from '../dropdown/SmallMenu';
 import LinksListItem from '../dropdown/LinksListItem';
 import {useState} from 'react';
 
-export default function CategoryItem({category, index}) {
+export default function CategoryItem({category, index, actions, products}) {
 	const [dropdown, setDropdown] = useState(false)
+
+	const toggleDropdown = value => setDropdown(value)
 
 	return (
 		<TableListItem>
 			<ListCol>{index + 1}</ListCol>
 			<ListCol accent="high">{category.name}</ListCol>
+			<ListCol>{products.filter(product => product.category === category.id).length} шт.</ListCol>
 			<ListColIcon>
 				{/*---DROPDOWN---*/}
 				<DropdownLayout>
@@ -26,9 +29,13 @@ export default function CategoryItem({category, index}) {
 					{dropdown && <SmallMenu>
 						<LinksListItem
 							icon={'edit'}
+							toggleDropdown={toggleDropdown}
+							action={actions.edit}
 						>Редагувати категорію</LinksListItem>
 						<LinksListItem
 							icon={'trash-alt'}
+							toggleDropdown={toggleDropdown}
+							action={actions.delete}
 						>Видалити категорію</LinksListItem>
 					</SmallMenu>}
 				</DropdownLayout>

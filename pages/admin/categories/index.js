@@ -11,23 +11,32 @@ import {useCategory} from '../../../hooks/useCategory';
 import {alertContext} from '../../../context/alert/alertContext';
 import {wrapper} from '../../../redux/store';
 import {useDispatch, useSelector} from 'react-redux';
-import {setCategories, removeCategory, searchCategory} from '../../../redux/actions';
+import {setCategories, removeCategory, searchCategory, setProducts, editProduct} from '../../../redux/actions';
 import {useForm} from 'react-hook-form';
 import Alert from '../../../components/Alert';
 import Button from '../../../components/AdminLayout/Button';
 import CategoryItem from '../../../components/AdminLayout/TableList/CategoryItem';
+import RightSidebar from '../../../components/AdminLayout/RightSidebar';
+import {useProduct} from '../../../hooks/useProduct';
 
 export default function Categories() {
-	const [active, setActive] = useState(false)
-	const [category, setCategory] = useState(null)
+	// Plain variables
+	const pageName = 'Категорії'
+	const notAllowedCategory = process.env.NOT_ALLOWED_CATEGORY
+
+	// Локальний стейт
+	const [sidebar, setSidebar] = useState(false)
+	const [pickedCategory, setPickedCategory] = useState(null)
 	const [fetchedCategories, setFetchedCategories] = useState([])
 
+	// Хуки
+	const dispatch = useDispatch()
 	const {deleteCategory} = useCategory()
+	const {updateProduct} = useProduct()
 	const {showAlert} = useContext(alertContext)
 	const {register, handleSubmit} = useForm()
-
 	const {categories, foundCategories} = useSelector(state => state.categories)
-	const dispatch = useDispatch()
+	const {products} = useSelector(state => state.products)
 
 	useEffect(() => {
 		// Якщо користувач починає шукати
@@ -38,54 +47,61 @@ export default function Categories() {
 		}
 	}, [categories, foundCategories])
 
-	const requestEnd = (message, type, index) => {
-		showAlert(message, type)
-		toggleDropdown(index)
-	}
 
-	const removeCat = (id, index) => {
-		if (confirm('Відновити цю категорію буде не можливо. Продовжити?')) {
-			return deleteCategory(id).then(response => {
-				if (response?.error) {
-					requestEnd(response.error.message, 'error', index)
-				} else {
-					requestEnd('Категорію було видалено', 'warning', index)
-					dispatch(removeCategory(id))
-				}
-			})
+	// Функції
+	const removeCat = id => {
+		if (id !== notAllowedCategory) {
+			if (confirm('Відновити цю категорію буде не можливо. Продовжити?')) {
+				const productsInCategory = products.filter(product => product.category === id)
+
+				return deleteCategory(id).then(response => {
+					if (response?.error) {
+						showAlert(response.error.message, 'error')
+					} else {
+						showAlert('Категорію було видалено', 'warning')
+
+						productsInCategory.forEach(product => {
+							const newProduct = {
+								...product,
+								category: notAllowedCategory
+							}
+
+							updateProduct(newProduct).then(response => console.log(response?.error))
+							dispatch(editProduct(newProduct))
+						})
+
+						dispatch(removeCategory(id))
+					}
+				})
+			}
+		} else {
+			showAlert('Цю категорію видалити не можливо', 'error')
 		}
-
-		return
 	}
 
-	const hideSlide = e => e.target.classList.contains('hide-slide') && setActive(false)
-
-	const openSlider = (category, index = null) => {
-		setActive(true)
-		setCategory(category)
-
-		if (index) toggleDropdown(index)
-	}
-
-	const updateActive = value => setActive(value)
-
-	const toggleDropdown = index => {
-		const dropdown = document.querySelector(`#dropdown-${index}`)
-		dropdown.classList.toggle(common.hide)
-	}
-
+	const toggleSidebar = value => setSidebar(value)
 	const onSearch = data => dispatch(searchCategory(data.search))
+
+	const activateCategory = (category = null) => {
+		if (category?.id === notAllowedCategory) {
+			showAlert('Ви не можете редагувати цю категорію', 'error')
+		} else {
+			setPickedCategory(category)
+			toggleSidebar(true)
+		}
+	}
 
 	const listHeader = [
 		{text: '#'},
 		{text: 'Назва категорії'},
+		{text: 'Кількість товарів в категорії'},
 		{text: ''},
 	]
 
 	return (
-		<AdminLayout title={'Категорії'}>
+		<AdminLayout title={pageName}>
 			<Alert />
-			<PageHeader title="Категорії">
+			<PageHeader title={pageName}>
 				{/*ADDITIONAL HEADER TOOLS*/}
 				<li>
 					<form className={classes.formControlWrap} onSubmit={handleSubmit(onSearch)}>
@@ -105,7 +121,7 @@ export default function Categories() {
 					<Button
 						icon="plus"
 						color="primary"
-						clickAct={() => openSlider(null)}
+						clickAct={() => activateCategory()}
 					>Додати категорію</Button>
 				</li>
 			</PageHeader>
@@ -116,30 +132,36 @@ export default function Categories() {
 							key={cat.id}
 							index={index}
 							category={cat}
+							products={products}
+							actions={{
+								edit: () => activateCategory(cat),
+								delete: () => removeCat(cat.id)
+							}}
 						></CategoryItem>
 					)}
 				</ListBody>
 			</TableList>
-			<div
-				onClick={hideSlide}
-				className={`hide-slide ${classes.toggleSlide} ${active && classes.toggleActive}`}
-			>
-				<div className={classes.slideWrapper}>
-					<CategoryForm updateActive={updateActive} category={category} />
-				</div>
-			</div>
+			<RightSidebar options={{active: sidebar, toggleSidebar}}>
+				<CategoryForm toggleSidebar={toggleSidebar} category={pickedCategory} />
+			</RightSidebar>
 		</AdminLayout>
 	)
 }
 
 export const getStaticProps = wrapper.getStaticProps(async ({store}) => {
 	let categories = []
+	let products = []
 
 	await db.collection('categories').get().then(snapshot => {
 		snapshot.forEach(cat => categories.push({id: cat.id, ...cat.data()}))
 	})
 
+	await db.collection('products').get().then(snapshot => {
+		snapshot.forEach(product => products.push({id: product.id, ...product.data()}))
+	})
+
 	store.dispatch(setCategories(categories))
+	store.dispatch(setProducts(products))
 
 	return {props: {}}
 })

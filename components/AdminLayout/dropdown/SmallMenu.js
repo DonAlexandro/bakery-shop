@@ -5,7 +5,7 @@ export default function SmallMenu({children, menuId, right}) {
 	return (
 		<div className={[
 			dropdown.dropdownMenu,
-			right ? dropdown.dropdownMenuRight : dropdown.dropdownMenuRight,
+			right ? dropdown.dropdownMenuRight : dropdown.dropdownMenuLeft,
 			dropdown.dropdownMenuSm,
 			shadows.shadowLg
 		].join(' ')} id={menuId}>

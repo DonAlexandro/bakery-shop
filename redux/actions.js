@@ -2,11 +2,12 @@ import {
 	CREATE_CATEGORY,
 	CREATE_PRODUCT,
 	DELETE_CATEGORY, DELETE_PRODUCT,
-	SEARCH_CATEGORY,
+	SEARCH_CATEGORY, SEARCH_PRODUCT,
 	SET_CATEGORIES, SET_PRODUCTS,
 	UPDATE_CATEGORY, UPDATE_PRODUCT
 } from './types';
 
+// Категорії
 export function addCategory(category) {
 	return {
 		type: CREATE_CATEGORY,
@@ -42,6 +43,7 @@ export function searchCategory(name) {
 	}
 }
 
+// Товари
 export function addProduct(product) {
 	return {
 		type: CREATE_PRODUCT,
@@ -67,5 +69,12 @@ export function setProducts(products) {
 	return {
 		type: SET_PRODUCTS,
 		payload: products
+	}
+}
+
+export function searchProduct(id) {
+	return {
+		type: SEARCH_PRODUCT,
+		payload: id
 	}
 }

@@ -28,7 +28,7 @@ export default function ProductImage({product, toggleModal}) {
 	const dispatch = useDispatch()
 	const {loading, showLoading, hideLoading} = useContext(loadingContext)
 	const {showAlert} = useContext(alertContext)
-	const {loadImage, deleteImage} = useImage()
+	const {loadImage} = useImage()
 	const {updateProduct} = useProduct()
 
 	const requestEnd = (message, type) => {
@@ -55,18 +55,12 @@ export default function ProductImage({product, toggleModal}) {
 			imageFullPath: loadedImage.url
 		}
 
-		return deleteImage(product.imagePath).then(response => {
+		updateProduct(newProduct).then(response => {
 			if (response?.error) {
 				requestEnd(response.error.message, 'error')
 			} else {
-				updateProduct(newProduct).then(response => {
-					if (response?.error) {
-						requestEnd(response.error.message, 'error')
-					} else {
-						requestEnd('Зображення успішно оновлено!', 'success')
-						dispatch(editProduct(newProduct))
-					}
-				})
+				requestEnd('Зображення успішно оновлено!', 'success')
+				dispatch(editProduct(newProduct))
 			}
 		})
 	}

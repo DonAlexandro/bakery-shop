@@ -1,8 +1,9 @@
-import {CREATE_PRODUCT, DELETE_PRODUCT, SET_PRODUCTS, UPDATE_PRODUCT} from '../types';
+import {CREATE_PRODUCT, DELETE_PRODUCT, SEARCH_PRODUCT, SET_PRODUCTS, UPDATE_PRODUCT} from '../types';
 import {HYDRATE} from 'next-redux-wrapper';
 
 const initialState = {
-	products: []
+	products: [],
+	foundProducts: []
 }
 
 export const productReducer = (state = initialState, action) => {
@@ -18,6 +19,13 @@ export const productReducer = (state = initialState, action) => {
 			newProducts.push(action.payload)
 
 			return {...state, products: newProducts}
+
+		case SEARCH_PRODUCT:
+			return {
+				...state,
+				foundProducts: action.payload.trim() !== '' && state.products.filter(product => product.id.toLowerCase().includes(action.payload.toLowerCase())),
+				products: state.products
+			}
 		case DELETE_PRODUCT:
 			return {...state, products: state.products.filter(product => product.id !== action.payload)}
 		default: return state

@@ -31,16 +31,17 @@ export default function ProductForm({toggleSidebar, product}) {
 		setValue
 	} = useForm()
 
-	const {loadImage, deleteImage} = useImage()
+	const {loadImage} = useImage()
 	const {createProduct, updateProduct} = useProduct()
 
-	const requestEnd = (message, type) => {
+	const requestEnd = (message, type, form) => {
 		showAlert(message, type)
 		toggleSidebar(false)
 		hideLoading()
+		form.reset()
 	}
 
-	const onSubmit = async ({image, ...data}) => {
+	const onSubmit = async ({image, ...data}, e) => {
 		showLoading()
 
 		if (product) {
@@ -52,9 +53,9 @@ export default function ProductForm({toggleSidebar, product}) {
 
 			return updateProduct(newProduct).then(response => {
 				if(response?.error) {
-					requestEnd(response.error.message, 'error')
+					requestEnd(response.error.message, 'error', e.target)
 				} else {
-					requestEnd('Товар успішно оновлено', 'success')
+					requestEnd('Товар успішно оновлено', 'success', e.target)
 					dispatch(editProduct(newProduct))
 				}
 			})
@@ -63,7 +64,7 @@ export default function ProductForm({toggleSidebar, product}) {
 			const loadedImage = await loadImage(image[0], folder)
 
 			if (loadedImage.error) {
-				requestEnd(loadedImage.error.message, 'error')
+				requestEnd(loadedImage.error.message, 'error', e.target)
 				return
 			}
 
@@ -75,9 +76,9 @@ export default function ProductForm({toggleSidebar, product}) {
 
 			return createProduct(newProduct).then(response => {
 				if (response.error) {
-					requestEnd(response.error.message, 'error')
+					requestEnd(response.error.message, 'error', e.target)
 				} else {
-					requestEnd('Товар успішно додано!', 'success')
+					requestEnd('Товар успішно додано!', 'success', e.target)
 					dispatch(addProduct(response))
 				}
 			})
@@ -182,13 +183,12 @@ export default function ProductForm({toggleSidebar, product}) {
 								name="category"
 								id="category"
 								styles={[classes.formControl]}
-								value={product ? product.category : ''}
 								onRef={register({
 									required: 'Виберіть, будь ласка, категорію'
 								})}
 							>
 								{categories.map(cat =>
-									<option key={cat.id} value={cat.id}>{cat.name}</option>
+									<option key={cat.id} value={cat.id} selected={cat.id === product?.category}>{cat.name}</option>
 								)}
 							</Select>
 							{errors.category && <span className={classes.invalidFeedback}>{errors.category.message}</span>}

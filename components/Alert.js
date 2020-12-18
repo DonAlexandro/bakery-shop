@@ -18,14 +18,13 @@ export default function Alert() {
 			text: alert.text,
 			icon: alert.type,
 			timer: 10000,
+			toast: alert.toast,
+			position: alert.toast ? 'top-end' : 'center',
 			showConfirmButton: false,
 			showCancelButton: true,
 			cancelButtonText: '&times;',
 			willClose: () => hideAlert(),
 			didClose: () => hideAlert(),
-			customClass: {
-				title: classes.h2,
-			}
 		})
 	}
 

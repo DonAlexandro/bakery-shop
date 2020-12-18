@@ -3,8 +3,6 @@
 @import "../../utils/functions";
 
 .btn, .btnBlock {
-    @include center-content;
-
     font-family: 'Roboto', sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;

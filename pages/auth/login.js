@@ -86,9 +86,12 @@ export default function Login() {
 						</div>
 						<div className={[classes.dFlex, classes.spaceBetween, classes.alignCenter].join(' ')}>
 							<Button
-								text={'Увійти'}
 								loading={loading}
-								styles={[classes.btn, classes.btnPrimary]}/>
+								actions={{
+									onClick: () => {}
+								}}
+								color="primary"
+							>Увійти</Button>
 							<Link href={'/auth/recovery'}>Забули пароль?</Link>
 						</div>
 					</form>

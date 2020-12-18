@@ -10,7 +10,7 @@ import {useDispatch} from 'react-redux';
 import {addCategory, editCategory} from '../../../redux/actions';
 import FormLayout from './FormLayout';
 
-export default function CategoryForm({updateActive, category}) {
+export default function CategoryForm({toggleSidebar, category}) {
 	const {register, handleSubmit, errors} = useForm()
 	const {showAlert} = useContext(alertContext)
 	const {loading, showLoading, hideLoading} = useContext(loadingContext)
@@ -18,21 +18,22 @@ export default function CategoryForm({updateActive, category}) {
 
 	const dispatch = useDispatch()
 
-	const requestEnd = (message, type) => {
+	const requestEnd = (message, type, form) => {
 		showAlert(message, type)
-		updateActive(false)
+		toggleSidebar(false)
 		hideLoading()
+		form.reset()
 	}
 
-	const onSubmit = (data) => {
+	const onSubmit = (data, e) => {
 		showLoading()
 
 		if (category) {
 			return updateCategory(data).then(response => {
 				if (response?.error) {
-					requestEnd(response.error.message, 'error')
+					requestEnd(response.error.message, 'error', e.target)
 				} else {
-					requestEnd('Категорію успішно оновлено!', 'success')
+					requestEnd('Категорію успішно оновлено!', 'success', e.target)
 					dispatch(editCategory(data))
 				}
 			})
@@ -40,9 +41,9 @@ export default function CategoryForm({updateActive, category}) {
 
 		return createCategory(data).then(response => {
 			if (response.error) {
-				requestEnd(response.error.message, 'error')
+				requestEnd(response.error.message, 'error', e.target)
 			} else {
-				requestEnd('Категорію успішно створено!', 'success')
+				requestEnd('Категорію успішно створено!', 'success', e.target)
 				dispatch(addCategory(response))
 			}
 		})
@@ -67,7 +68,7 @@ export default function CategoryForm({updateActive, category}) {
 							type="text"
 							className={classes.formControl}
 							name="name"
-							defaultValue={category && category.name}
+							defaultValue={category ? category.name : ''}
 							ref={register({
 								required: 'Введіть, будь ласка, назву категорії'
 							})}

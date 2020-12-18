@@ -18,7 +18,7 @@ export default function ProductItem({product, index, categories, actions}) {
 			<ListCol>{product.id}</ListCol>
 			<ListCol accent="medium">{product.price} грн.</ListCol>
 			<ListCol>{product.amount}</ListCol>
-			<ListCol>{categories.filter(cat => cat.id === product.category)[0].name}</ListCol>
+			<ListCol>{categories.filter(cat => cat.id === product.category)[0].name || 'Без категорії'}</ListCol>
 			<ListColIcon>
 				<DropdownLayout>
 					<button className={[

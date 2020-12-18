@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import AdminLayout from '../../../components/AdminLayout/AdminLayout';
 import classes from '../../../styles/AdminLayout/goods.module.scss'
@@ -9,7 +9,7 @@ import ProductForm from '../../../components/AdminLayout/forms/ProductForm';
 import Button from '../../../components/AdminLayout/Button';
 import {wrapper} from '../../../redux/store';
 import {db} from '../../../config/firebaseConfig';
-import {removeProduct, setCategories, setProducts} from '../../../redux/actions';
+import {removeProduct, searchProduct, setCategories, setProducts} from '../../../redux/actions';
 import {useDispatch, useSelector} from 'react-redux';
 import ProductItem from '../../../components/AdminLayout/TableList/ProductItem';
 import {useProduct} from '../../../hooks/useProduct';
@@ -17,6 +17,7 @@ import {alertContext} from '../../../context/alert/alertContext';
 import {useImage} from '../../../hooks/useImage';
 import Modal from '../../../components/AdminLayout/Modal';
 import ProductImage from '../../../components/AdminLayout/modals/ProductImage';
+import {useForm} from 'react-hook-form';
 
 export default function Goods() {
 	const pageName = 'Товари'
@@ -25,33 +26,35 @@ export default function Goods() {
 	const [sidebar, setSidebar] = useState(false)
 	const [modal, setModal] = useState(false)
 	const [pickedProduct, setPickedProduct] = useState(null)
+	const [fetchedProducts, setFetchedProducts] = useState([])
 
 	// Хуки
 	const dispatch = useDispatch()
-	const {products} = useSelector(state => state.products)
+	const {products, foundProducts} = useSelector(state => state.products)
 	const {categories} = useSelector(state => state.categories)
 	const {deleteProduct} = useProduct()
 	const {deleteImage} = useImage()
 	const {showAlert} = useContext(alertContext)
+	const {register, handleSubmit} = useForm()
+
+	useEffect(() => {
+		if (foundProducts && foundProducts.length !== 0) {
+			setFetchedProducts(foundProducts)
+		} else {
+			setFetchedProducts(products)
+		}
+	}, [products, foundProducts])
 
 	// Функції
 	const toggleSidebar = value => setSidebar(value)
 	const toggleModal = value => setModal(value)
 
-	const createProduct = () => {
-		setPickedProduct(null)
-		toggleSidebar(true)
+	const activateProduct = (product = null, image = false) => {
+		setPickedProduct(product)
+		image ? toggleModal(true) : toggleSidebar(true)
 	}
 
-	const editProduct = product => {
-		setPickedProduct(product)
-		toggleSidebar(true)
-	}
-
-	const editImage = product => {
-		setPickedProduct(product)
-		toggleModal(true)
-	}
+	const onSearch = data => dispatch(searchProduct(data.id))
 
 	const removeProd = product => {
 		if (confirm('Після видалення товару відновити його буде не можливо. Продовжити?')) {
@@ -88,46 +91,45 @@ export default function Goods() {
 		<AdminLayout title={pageName}>
 			<PageHeader title={pageName}>
 				<li>
-					<div className={classes.formControlWrap}>
+					<form className={classes.formControlWrap} onSubmit={handleSubmit(onSearch)}>
 						<div className={`${classes.formIcon} ${classes.formIconRight}`}>
 							<FontAwesomeIcon icon="search" />
 						</div>
 						<input
 							type="text"
 							placeholder="Пошук товару за кодом"
+							name="id"
 							className={classes.formControl}
+							ref={register}
 						/>
-					</div>
+					</form>
 				</li>
 				<li>
 					<Button
 						color="primary"
 						icon={'plus'}
-						clickAct={createProduct}
+						clickAct={() => activateProduct()}
 					>Додати товар</Button>
 				</li>
 			</PageHeader>
 			<TableList listHeader={listHeader}>
 				<ListBody>
-					{products.map((product, index) =>
+					{fetchedProducts.map((product, index) =>
 						<ProductItem
 							key={product.id}
 							product={product}
 							index={index}
 							categories={categories}
 							actions={{
-								image: () => editImage(product),
-								edit: () => editProduct(product),
+								image: () => activateProduct(product, true),
+								edit: () => activateProduct(product),
 								delete: () => removeProd(product)
 							}}
 						></ProductItem>
 					)}
 				</ListBody>
 			</TableList>
-			<RightSidebar options={{
-				active: sidebar,
-				toggleSidebar
-			}}>
+			<RightSidebar options={{active: sidebar, toggleSidebar}}>
 				<ProductForm
 					toggleSidebar={toggleSidebar}
 					product={pickedProduct}

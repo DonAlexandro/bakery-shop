@@ -23,7 +23,7 @@ export const categoryReducer = (state = initialState, action) => {
 			return {
 				...state,
 				foundCategories: action.payload.trim() !== ''
-					? state.categories.filter(cat => cat.name.includes(action.payload))
+					? state.categories.filter(cat => cat.name.toLowerCase().includes(action.payload.toLowerCase()))
 					: state.categories
 			}
 		case DELETE_CATEGORY:
