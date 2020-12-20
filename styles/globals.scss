@@ -1,8 +1,9 @@
-@import "MainLayout/utils/variables";
-@import "MainLayout/utils/mixins";
+@import "utils/variables";
+@import "utils/mixins";
 
 * {
     box-sizing: border-box;
+    outline: none;
 }
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -32,6 +33,7 @@ footer, header, hgroup, menu, nav, section {
 body {
     line-height: 1;
     white-space: pre-line;
+    background: $lighter;
 }
 ol, ul {
     list-style: none;

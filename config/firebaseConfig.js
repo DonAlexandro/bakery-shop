@@ -1,21 +1,24 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore';
+import 'firebase/storage';
 
 const firebaseConfig = {
-	apiKey: "AIzaSyDkoLS8aqpkzFVoI-HV2cPHk0dzzKFBSJY",
-	authDomain: "bakery-5ed59.firebaseapp.com",
-	databaseURL: "https://bakery-5ed59.firebaseio.com",
-	projectId: "bakery-5ed59",
-	storageBucket: "bakery-5ed59.appspot.com",
-	messagingSenderId: "342835081518",
-	appId: "1:342835081518:web:51738c15d9ae98eff58abf"
+	apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+	authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+	databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+	projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 }
-
-try {
+if (!firebase.apps.length) {
 	firebase.initializeApp(firebaseConfig)
-} catch (err) {
-	if (!/already exists/.test(err.message)) {
-		console.error('Firebase initialization error', err.stack)
-	}
 }
 
-export default firebase
+const auth = firebase.auth()
+const db = firebase.firestore()
+const now = firebase.firestore.Timestamp.now()
+const storage = firebase.storage()
+
+export {auth, db, now, storage}

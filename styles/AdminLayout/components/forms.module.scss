@@ -1,0 +1,109 @@
+@import "styles/utils/variables";
+@import "styles/utils/mixins";
+
+.label {
+    display: inline-block;
+    cursor: pointer;
+    font-size: .875rem;
+    margin-bottom: .875rem;
+    font-weight: 500;
+    color: $base-color;
+}
+
+.formGroup {
+    width: 100%;
+
+    .invalidFeedback {
+        font-style: italic;
+        color: $danger-color;
+        font-size: 11px;
+        display: inline-block;
+        margin-top: .5rem;
+    }
+}
+
+.formControlWrap {
+    position: relative;
+
+    .formIcon {
+        position: absolute;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        top: 50%;
+        transform: translateY(-50%);
+        width: calc(1rem + 24px);
+        height: calc(1rem + 24px);
+        color: $soft-color;
+        font-size: 12px;
+
+        &.formIconRight {
+            left: auto;
+            right: -1px;
+        }
+    }
+
+    .formIconRight + .formControl {
+        padding-left: 1rem;
+        padding-right: calc(1rem + 24px);
+    }
+}
+
+.formControl {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    color: $grey600;
+    padding: 7px 16px;
+    line-height: 1.25rem;
+    height: 36px;
+    border-radius: 4px;
+    background: #fff;
+    border: 1px solid $grey300;
+
+    &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba(133,79,255,0.1);
+    }
+
+    &::placeholder {
+        color: $soft-color;
+    }
+}
+
+.formControlSelect {
+    position: relative;
+
+    &::after {
+        content: '›';
+        position: absolute;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%) rotate(90deg);
+        width: calc(1rem + 12px);
+        height: calc(1rem + 12px);
+    }
+}
+
+.uploadZone {
+    @include center-content;
+
+    border: 1px dashed $light;
+    background: $lighter;
+    border-radius: 4px;
+    padding: 20px;
+    min-height: 86px;
+
+    .uploadZoneMessage {
+        font-size: 13px;
+        color: rgba(82,100,132,0.6);
+    }
+
+    input[type=file] {
+        //display: none;
+    }
+}

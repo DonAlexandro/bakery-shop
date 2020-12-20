@@ -1,0 +1,24 @@
+.containerFluid {
+    width: 100%;
+    padding: 0 14px;
+    margin: 0 auto;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    > div {
+        margin-bottom: 1.25rem;
+    }
+
+    .col12 {
+        width: 100%;
+    }
+
+    .col6 {
+        width: 48%;
+    }
+}

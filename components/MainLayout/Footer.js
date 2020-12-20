@@ -1,4 +1,4 @@
-import classes from '../styles/components/footer.module.scss'
+import classes from '../../styles/MainLayout/components/footer.module.scss'
 
 export default function Footer() {
 	const cols = [

@@ -1,0 +1,47 @@
+@import "styles/utils/variables";
+
+.badge {
+    padding: 5px 12px 5px 28px;
+    border-radius: 20px;
+    position: relative;
+
+    &:before {
+        height: 8px;
+        width: 8px;
+        margin-top: 0;
+        position: absolute;
+        content: "";
+        top: 50%;
+        transform: translateY(-50%);
+        display: inline-block;
+        border-radius: 50%;
+        left: 12px;
+    }
+
+    &.badgeWarning {
+        background-color: $pale_warning-color;
+        color: $warning-color;
+
+        &:before {
+            background: $warning-color;
+        }
+    }
+
+    &.badgeInfo {
+        background-color: $pale_info-color;
+        color: $info-color;
+
+        &:before {
+            background: $info-color;
+        }
+    }
+
+    &.badgeSuccess {
+        background-color: $pale_success-color;
+        color: $success-color;
+
+        &:before {
+            background: $success-color;
+        }
+    }
+}

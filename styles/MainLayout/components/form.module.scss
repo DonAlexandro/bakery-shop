@@ -1,5 +1,5 @@
-@import "../utils/_variables";
-@import "../utils/colors";
+@import "../../utils/variables";
+@import "../../utils/colors";
 
 .formGroup {
     margin-bottom: 10px;
@@ -7,6 +7,14 @@
     .textHelper {
         font-size: 12px;
         color: $grey;
+    }
+
+    label {
+        display: inline-block;
+        cursor: pointer;
+        font-size: .875rem;
+        margin-bottom: .6rem;
+        font-weight: 500;
     }
 }
 
@@ -28,4 +36,5 @@ input.formControl {
 
 textarea.formControl {
     padding: 10px 20px;
+    min-width: 100%;
 }

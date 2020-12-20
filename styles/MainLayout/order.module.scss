@@ -1,0 +1,44 @@
+@import "styles/utils/variables";
+@import "styles/utils/colors";
+@import "styles/utils/spaces.module";
+@import "components/form.module";
+
+.orderSection {
+    &:not(:first-child) {
+        margin-top: 1rem;
+    }
+
+    .orderSectionTitle {
+        text-transform: none !important;
+        margin-bottom: 1rem;
+    }
+}
+
+.orderList {
+
+    li {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .orderListItem {
+        border-bottom: 1px solid $brown;
+        padding: 20px 0;
+        font-size: 14px;
+
+        &:first-child {
+            padding-top: 0;
+        }
+    }
+
+    .orderListSum {
+        font-size: 16px;
+        border-bottom: 1px solid $brown;
+        padding: 15px 0 5px 0;
+    }
+
+    .orderListTotal {
+        font-size: 18px;
+        padding: 12px 0;
+    }
+}

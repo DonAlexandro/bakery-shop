@@ -1,13 +1,32 @@
 import Head from 'next/head';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+import {
+	faUser,
+	faHome,
+	faCog,
+	faUserTimes,
+	faUserPlus,
+	faTruck,
+	faClipboardCheck,
+	faClipboardList
+
+} from '@fortawesome/free-solid-svg-icons'
 import Header from './Header';
 import Footer from './Footer';
-import classes from '../styles/components/mainLayout.module.scss'
-import {AlertProvider} from '../context/alert/AlertProvider';
+import classes from '../../styles/MainLayout/components/mainLayout.module.scss'
 
-library.add(fab, faUser)
+library.add(
+	fab,
+	faUser,
+	faHome,
+	faCog,
+	faUserTimes,
+	faUserPlus,
+	faTruck,
+	faClipboardCheck,
+	faClipboardList
+)
 
 export default function MainLayout({children, title = 'Сторінка', keywords = [], description}) {
 	keywords = ['bakery', 'пекарня', 'місто', 'town', ...keywords]

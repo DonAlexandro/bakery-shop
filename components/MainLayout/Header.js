@@ -1,10 +1,13 @@
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import classes from '../styles/components/header.module.scss'
+import classes from '../../styles/MainLayout/components/header.module.scss'
+import Image from 'next/image';
+import {useAuth} from '../../hooks/useAuth';
 
 export default function Header() {
 	const router = useRouter()
+	const {user, signOut} = useAuth()
 
 	const links = [
 		{href: '/', text: 'Головна'},
@@ -28,9 +31,21 @@ export default function Header() {
 						<a className={router.pathname === link.href ? classes.active : ''}>{link.text}</a>
 					</Link>
 				)}
-				<Link href={'/auth/login'}>
-					<a><FontAwesomeIcon icon="user"/></a>
-				</Link>
+				{user
+					? <div className={classes.dropdown}>
+						<Link href={'/auth/profile'}><a>
+							<Image
+								src={user.photoURL || '/thumb-user.jpg'}
+								alt={user.email}
+								width={30}
+								height={30}
+							></Image>
+						</a></Link>
+						<div className={`${classes.dropdownBody}`}>
+							<a onClick={() => signOut()}>Вийти</a>
+						</div>
+					  </div>
+					: <Link href={'/auth/login'}><a><FontAwesomeIcon icon="user"/></a></Link>}
 			</nav>
 		</header>
 	)

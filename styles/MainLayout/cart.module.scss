@@ -20,7 +20,7 @@
         li {
             @include center-content-by-y;
 
-            padding: 20px;
+            padding: 5px 0 5px 20px;
 
             &:not(:last-child) {
                 border-bottom: 1px solid $brown;
@@ -33,7 +33,6 @@
 
                 .count {
                     width: 50px;
-                    text-align: center;
                     margin: 0 3px;
                 }
 
@@ -41,6 +40,27 @@
                     margin-left: 20px;
                 }
             }
+
+            .remove {
+                font-size: 1.3rem;
+                padding: 20px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .cartEmpty {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin: 40px 0;
+
+        p {
+            width: 30%;
+            text-align: center;
+            color: #B2A497;
+            font-size: 14px;
+            margin-top: 20px;
         }
     }
 

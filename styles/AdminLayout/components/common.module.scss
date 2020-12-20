@@ -1,0 +1,98 @@
+@import "styles/utils/mixins";
+@import "styles/utils/variables";
+@import "styles/utils/colors";
+@import "styles/AdminLayout/components/flex";
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.rounded {
+    border-radius: 50% !important;
+}
+
+.lead {
+    color: $secondary-color;
+    font-weight: 500;
+}
+
+.hoverable {
+    transition: $transition;
+
+    &:hover {
+        box-shadow: 0 2px 15px -4px rgba(133, 79, 255, 0.4);
+    }
+}
+
+.pageHeader {
+    @include center-content-by-y;
+
+    width: 100%;
+    padding-bottom: 1.5rem;
+    justify-content: space-between;
+    z-index: 9998;
+
+    .pageHeaderContent {}
+}
+
+.blockTools {
+    @include center-content-by-y;
+
+    li {
+        padding: .5rem;
+    }
+}
+
+.tbList {
+    width: 100%;
+    color: $soft-color;
+    font-size: 13px;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+
+    tr {
+        background: #fff;
+        box-shadow: rgba(54, 74, 99, 0.05) 0px 1px 3px 0px;
+    }
+
+    th {
+        padding: 16px 8px;
+        font-weight: 500;
+    }
+
+    td {
+        padding: 20px 8px;
+
+        .title {
+            color: $secondary-color;
+            font-size: .875rem;
+            font-weight: 700;
+        }
+    }
+
+    th, td {
+        text-align: left;
+        font-size: 13px;
+        color: #8094ae;
+        border: none;
+
+        &:first-child {
+            padding-left: 24px;
+            border-radius: 4px 0 0 4px;
+        }
+
+        &:last-child {
+            padding-right: 24px;
+            border-radius: 0 4px 4px 0;
+        }
+    }
+}
+
+.borderTransparent {
+    border: none !important;
+    box-shadow: none !important;
+}

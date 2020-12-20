@@ -1,28 +1,67 @@
 import {useEffect, useState} from 'react'
-import classes from '../../styles/cart.module.scss'
-import MainLayout from '../../components/MainLayout';
+import MainLayout from '../../components/MainLayout/MainLayout';
+import Page, {Sticker} from '../../components/MainLayout/Page';
+import CartLayout, {
+	CartEmpty,
+	CartHeader,
+	CartList,
+	CartListItem,
+	CartSum
+} from '../../components/MainLayout/CartLayout';
+import {useCart} from '../../hooks/useCart';
+import {useAuth} from '../../hooks/useAuth';
+import Button from '../../components/MainLayout/Button';
+import Modal from '../../components/MainLayout/Modal';
+import OrderItem from '../../components/MainLayout/modals/OrderItem';
 
 export default function Cart() {
-	const [goodsSum, setGoodsSum] = useState(0)
+	const [cart, setCart] = useState([])
+	const [clickedToDelete, setClickedToDelete] = useState(false)
+	const [cartSum, setCartSum] = useState(0)
+	const [modal, setModal] = useState(false)
 
-	const cart = [
-		{count: 1, price: 10, title: 'Житньопшеничний хліб'},
-		{count: 2, price: 12.5, title: 'Булка "сімейна"'},
-		{count: 4, price: 15, title: 'Висівковий хліб'},
-	]
+	const {user} = useAuth()
+	const {fetchCart, addToCart} = useCart()
 
 	useEffect(() => {
-		function countSum() {
-			let sum = 0
-
-			cart.forEach(good => sum += good.count * good.price)
-
-			return sum
+		function loadCart() {
+			if (user?.id) {
+				fetchCart(user.id).then(response => {
+					if (response.products) {
+						setCart(response.products || [])
+					}
+				})
+			}
 		}
 
-		const sum = countSum()
-		setGoodsSum(sum)
-	}, [])
+		loadCart()
+	}, [user])
+
+	useEffect(() => {
+		if (clickedToDelete) {
+			addToCart({user: user.id, products: cart}).then(response => {
+				if (response.products) {
+					setCart(response.products)
+					setClickedToDelete(false)
+				}
+			})
+		}
+	}, [clickedToDelete, user])
+
+	const setProductSum = sum => setCartSum(prev => prev + +sum)
+
+	const removeProductFromCart = id => {
+		setCart(prev => prev.filter(product => product.id !== id))
+		setClickedToDelete(true)
+	}
+
+	const updateProductCount = (count, id) => {
+		const editingProduct = cart.filter(product => product.id === id)[0]
+		editingProduct.count = count
+	}
+
+	const toggleModal = value => setModal(value)
+	const clearCart = () => setCart([])
 
 	return (
 		<MainLayout
@@ -30,48 +69,42 @@ export default function Cart() {
 			keywords={['корзина', 'cart']}
 			description={'Корзина користувача'}
 		>
-			<div className={classes.page}>
-				<div className={classes.sticker}>
-					<h5>Корзина</h5>
-				</div>
-				<div className={classes.cart}>
-					<header>
-						<span>Ваше замовлення</span>
-						<span>({cart.length} шт.)</span>
-					</header>
-					<ul className={classes.list}>
-						{cart.map((product, i)  =>
-							<li key={i}>
-								<div className={classes.info}>
-									<div className={classes.dFlex}>
-										<button
-											className={[classes.toggleBtnSm, classes.btnOutlinePrimary].join(' ')}
-											onClick={() => product.count - 1}
-										>-</button>
-										<input
-											type="number"
-											className={`${classes.count} ${classes.formControl}`}
-											value={product.count}
-											onChange={e => product.count = e.target.value}
-										/>
-										<button
-											className={[classes.toggleBtnSm, classes.btnOutlinePrimary].join(' ')}
-											onClick={() => product.count + 1}
-										>+</button>
-									</div>
-									<span className={classes.name}>{product.title}</span>
-								</div>
-								<div>{product.price} грн.</div>
-							</li>
-						)}
-					</ul>
-					<div className={classes.sum}>
-						<span>Сума</span>
-						<span>{goodsSum} грн.</span>
-					</div>
-					<button className={`${classes.btnBlock} ${classes.btnPrimary}`}>Оформити замовлення</button>
-				</div>
-			</div>
+			<Page>
+				<Sticker>Корзина</Sticker>
+				<CartLayout>
+					{cart.length !== 0 ? <>
+						<CartHeader count={cart.length}>Ваша корзина</CartHeader>
+							<CartList>
+								{cart.map((product, i) =>
+									<CartListItem
+										key={i}
+										count={product.count}
+										product={product}
+										setProductSum={setProductSum}
+										removeProductFromCart={removeProductFromCart}
+										updateProductCount={updateProductCount}
+									/>
+								)}
+							</CartList>
+							<CartSum sum={cartSum}/>
+							<Button
+								block
+								actions={{
+									onClick: () => toggleModal(true)
+								}}
+							>Оформити замовлення</Button>
+						</> : <CartEmpty />}
+				</CartLayout>
+			</Page>
+			{modal && <Modal toggleModal={toggleModal}>
+				<OrderItem
+					sum={cartSum}
+					products={cart}
+					customer={user}
+					toggleModal={toggleModal}
+					clearCart={clearCart}
+				/>
+			</Modal>}
 		</MainLayout>
 	)
 }
