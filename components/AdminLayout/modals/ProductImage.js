@@ -2,7 +2,7 @@ import {ModalContent, ModalFooter} from '../Modal';
 import File from '../forms/components/File';
 import {useForm} from 'react-hook-form';
 import classes from '../../../styles/AdminLayout/components/forms.module.scss'
-import spaces from '../../../styles/AdminLayout/components/spaces.module.scss'
+import spaces from '../../../styles/utils/spaces.module.scss'
 import Button from '../Button';
 import Image from 'next/image';
 import {loadingContext} from '../../../context/loading/loadingContext';

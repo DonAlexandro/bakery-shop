@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react'
-import classes from '../../styles/MainLayout/cart.module.scss'
 import MainLayout from '../../components/MainLayout/MainLayout';
 import Page, {Sticker} from '../../components/MainLayout/Page';
 import CartLayout, {
@@ -9,21 +8,20 @@ import CartLayout, {
 	CartListItem,
 	CartSum
 } from '../../components/MainLayout/CartLayout';
-import {wrapper} from '../../redux/store';
-import {db} from '../../config/firebaseConfig';
-import {setProducts} from '../../redux/actions';
 import {useCart} from '../../hooks/useCart';
 import {useAuth} from '../../hooks/useAuth';
-import {useSelector} from 'react-redux';
+import Button from '../../components/MainLayout/Button';
+import Modal from '../../components/MainLayout/Modal';
+import OrderItem from '../../components/MainLayout/modals/OrderItem';
 
 export default function Cart() {
 	const [cart, setCart] = useState([])
 	const [clickedToDelete, setClickedToDelete] = useState(false)
 	const [cartSum, setCartSum] = useState(0)
+	const [modal, setModal] = useState(false)
 
 	const {user} = useAuth()
 	const {fetchCart, addToCart} = useCart()
-	const {products} = useSelector(state => state.products)
 
 	useEffect(() => {
 		function loadCart() {
@@ -53,14 +51,17 @@ export default function Cart() {
 	const setProductSum = sum => setCartSum(prev => prev + +sum)
 
 	const removeProductFromCart = id => {
-		setCart(prev => prev.filter(product => product.productId !== id))
+		setCart(prev => prev.filter(product => product.id !== id))
 		setClickedToDelete(true)
 	}
 
 	const updateProductCount = (count, id) => {
-		const editingProduct = cart.filter(product => product.productId === id)[0]
+		const editingProduct = cart.filter(product => product.id === id)[0]
 		editingProduct.count = count
 	}
+
+	const toggleModal = value => setModal(value)
+	const clearCart = () => setCart([])
 
 	return (
 		<MainLayout
@@ -71,37 +72,39 @@ export default function Cart() {
 			<Page>
 				<Sticker>Корзина</Sticker>
 				<CartLayout>
-					<CartHeader count={cart.length}>Ваша корзина</CartHeader>
-					{cart.length !== 0 ? <CartList>
-						{cart.map((product, i) => {
-							const parsedProduct = product
-
-							return <CartListItem
-								key={i}
-								count={parsedProduct.count}
-								product={products.filter(good => good.id === parsedProduct.productId)}
-								setProductSum={setProductSum}
-								removeProductFromCart={removeProductFromCart}
-								updateProductCount={updateProductCount}
-							/>
-						})}
-					</CartList> : <CartEmpty />}
-					<CartSum sum={cartSum}/>
-					<button className={`${classes.btnBlock} ${classes.btnPrimary}`}>Оформити замовлення</button>
+					{cart.length !== 0 ? <>
+						<CartHeader count={cart.length}>Ваша корзина</CartHeader>
+							<CartList>
+								{cart.map((product, i) =>
+									<CartListItem
+										key={i}
+										count={product.count}
+										product={product}
+										setProductSum={setProductSum}
+										removeProductFromCart={removeProductFromCart}
+										updateProductCount={updateProductCount}
+									/>
+								)}
+							</CartList>
+							<CartSum sum={cartSum}/>
+							<Button
+								block
+								actions={{
+									onClick: () => toggleModal(true)
+								}}
+							>Оформити замовлення</Button>
+						</> : <CartEmpty />}
 				</CartLayout>
 			</Page>
+			{modal && <Modal toggleModal={toggleModal}>
+				<OrderItem
+					sum={cartSum}
+					products={cart}
+					customer={user}
+					toggleModal={toggleModal}
+					clearCart={clearCart}
+				/>
+			</Modal>}
 		</MainLayout>
 	)
 }
-
-export const getStaticProps = wrapper.getStaticProps(async ({store}) => {
-	let products = []
-
-	await db.collection('products').get().then(snapshot => {
-		snapshot.forEach(product => products.push({id: product.id, ...product.data()}))
-	})
-
-	store.dispatch(setProducts(products))
-
-	return {props: {}}
-})

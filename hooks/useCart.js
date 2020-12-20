@@ -13,5 +13,10 @@ export const useCart = () => {
 			.catch(error => ({error}))
 	}
 
-	return {addToCart, fetchCart}
+	const deleteCart = id => {
+		return db.collection('cart').doc(id).delete()
+			.catch(error => ({error}))
+	}
+
+	return {addToCart, fetchCart, deleteCart}
 }

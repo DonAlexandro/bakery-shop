@@ -1,4 +1,4 @@
-import classes from '../../styles/AdminLayout/components/grid.module.scss'
+import classes from '../styles/AdminLayout/components/grid.module.scss'
 
 export const Row = ({children}) => {
 	return (

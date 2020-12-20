@@ -24,10 +24,11 @@ export default function Menu() {
 
 	const [cart, setCart] = useState({})
 	const [productsInCart, setProductsInCart] = useState([])
+	const [clickedToAdd, setClickedToAdd] = useState(false)
 
 	useEffect(() => {
 		function addCartToDB() {
-			if (cart.user && cart.products.length !== 0) {
+			if (cart.user && cart.products.length !== 0 && clickedToAdd) {
 				addToCart(cart).then(response => {
 					if (response.error) {
 						requestEnd('Щось пішло не так...', 'success')
@@ -62,20 +63,28 @@ export default function Menu() {
 	const requestEnd = (message, type, toast) => {
 		showAlert(message, type, toast)
 		hideLoading()
+		setClickedToAdd(false)
 	}
 
 	const addToLocalCart = good => {
-		const isProductInCart = productsInCart.some(product => product.productId === good.id)
+		const isProductInCart = productsInCart.some(product => product.id === good.id)
 
 		if (isProductInCart) {
 			requestEnd('Цей товар уже в вашій корзині :)', 'success', true)
 		} else {
-			const newProduct = {count: 1, productId: good.id}
+			const newProduct = {
+				count: 1,
+				id: good.id,
+				name: good.name,
+				price: good.price
+			}
 
 			setProductsInCart(prev => [
 				...prev,
 				newProduct
 			])
+
+			setClickedToAdd(true)
 		}
 	}
 

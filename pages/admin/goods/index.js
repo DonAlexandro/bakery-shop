@@ -78,13 +78,13 @@ export default function Goods() {
 	}
 
 	const listHeader = [
-		{text: '#', grow: false},
-		{text: 'Назва товару', grow: true},
-		{text: 'Код товару', grow: true},
-		{text: 'Ціна товару', grow: false},
-		{text: 'Кількість на складі', grow: false},
-		{text: 'Категорія', grow: false},
-		{text: '', grow: false},
+		'#',
+		'Назва товару',
+		'Код товару',
+		'Ціна товару',
+		'Кількість на складі',
+		'Категорія',
+		'',
 	]
 
 	return (

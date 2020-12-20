@@ -3,7 +3,7 @@ import {useContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import FormLayout from './FormLayout';
 import classes from '../../../styles/AdminLayout/components/rsForm.module.scss';
-import {Col12, Col6, Row} from '../Grid';
+import {Col12, Col6, Row} from '../../Grid';
 import Button from '../Button';
 import {loadingContext} from '../../../context/loading/loadingContext';
 import {addProduct, editProduct, setCategories} from '../../../redux/actions';

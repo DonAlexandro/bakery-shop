@@ -1,6 +1,6 @@
 import classes from '../../styles/MainLayout/components/buttons.module.scss'
 
-export default function Button({children, color, loading, actions}) {
+export default function Button({children, color, loading = false, actions, block}) {
 	const colors = {
 		primary: classes.btnPrimary
 	}
@@ -9,7 +9,7 @@ export default function Button({children, color, loading, actions}) {
 		<button
 			disabled={loading}
 			className={[
-				classes.btn,
+				block ? classes.btnBlock : classes.btn,
 				colors[color] || classes.btnPrimary
 			].join(' ')}
 			onClick={actions.onClick}

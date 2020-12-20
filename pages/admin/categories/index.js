@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import AdminLayout from '../../../components/AdminLayout/AdminLayout'
 import classes from '../../../styles/AdminLayout/categories.module.scss'
-import common from '../../../styles/AdminLayout/components/common.module.scss'
 import CategoryForm from '../../../components/AdminLayout/forms/CategoryForm';
 import {db} from '../../../config/firebaseConfig';
 import TableList, {ListBody} from '../../../components/AdminLayout/TableList/index';
@@ -92,10 +91,7 @@ export default function Categories() {
 	}
 
 	const listHeader = [
-		{text: '#'},
-		{text: 'Назва категорії'},
-		{text: 'Кількість товарів в категорії'},
-		{text: ''},
+		'#', 'Назва категорії', 'Кількість товарів в категорії', '',
 	]
 
 	return (

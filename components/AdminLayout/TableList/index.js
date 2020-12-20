@@ -8,7 +8,7 @@ export default function TableList({children, listHeader}) {
 					{listHeader.map((item, index) =>
 						<th
 							key={index}
-						>{item.text}</th>
+						>{item}</th>
 					)}
 				</tr>
 			</thead>
@@ -34,13 +34,15 @@ export function TableListItem({children}) {
 }
 
 export function ListCol({children, accent}) {
+	const accents = {
+		high: classes.title,
+		medium: classes.lead,
+		colored: classes.textPrimary
+	}
+
 	return (
 		<td>
-			{accent === 'high'
-				? <span className={classes.title}>{children}</span>
-				: accent === 'medium' ? <span className={classes.lead}>{children}</span>
-				: children
-			}
+			<span className={accents[accent] || ''}>{children}</span>
 		</td>
 	)
 }

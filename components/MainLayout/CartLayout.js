@@ -29,26 +29,28 @@ export function CartList({children}) {
 
 export function CartListItem({product, count, setProductSum, removeProductFromCart, updateProductCount}) {
 	const [localCount, setLocalCount] = useState(+count || 1)
+	const [clickedToUpdate, setClickedToUpdate] = useState(false)
 
 	const changeCount = value => {
 		if (localCount > 0) {
 			setLocalCount(prev => prev + +value)
-			value > 0 ? setProductSum(product[0].price) : setProductSum(-product[0].price)
+			setClickedToUpdate(true)
+			value > 0 ? setProductSum(product.price) : setProductSum(-product.price)
 		}
 	}
 
 	const removeCurrentProduct = () => {
-		removeProductFromCart(product[0].id)
-		setProductSum(-(product[0].price * localCount))
+		removeProductFromCart(product.id)
+		setProductSum(-(product.price * localCount))
 	}
 
 	useEffect(() => {
-		setProductSum(product[0].price)
+		setProductSum(product.price)
 	}, [])
 
 	useEffect(() => {
-		updateProductCount(localCount, product[0].id)
-	}, [localCount])
+		if (clickedToUpdate) updateProductCount(localCount, product.id)
+	}, [localCount, clickedToUpdate])
 
 	return (
 		<li>
@@ -69,9 +71,9 @@ export function CartListItem({product, count, setProductSum, removeProductFromCa
 						onClick={() => changeCount(1)}
 					>+</button>
 				</div>
-				<span className={classes.name}>{product[0].name}</span>
+				<span className={classes.name}>{product.name}</span>
 			</div>
-			<div>{product[0].price * localCount} грн.</div>
+			<div>{product.price * localCount} грн.</div>
 			<div
 				onClick={() => removeCurrentProduct()}
 				className={classes.remove}
