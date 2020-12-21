@@ -6,25 +6,28 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import SmallMenu from '../dropdown/SmallMenu';
 import LinksListItem from '../dropdown/LinksListItem';
 import {pluralize} from '../../../utils/pluraliza';
+import {dateFormat} from '../../../utils/dateFormat';
 import Badge from '../Badge';
 
-export default function OrderItem({order, index}) {
+export default function OrderItem({order, index, actions}) {
 	const [dropdown, setDropdown] = useState(false)
 
 	const toggleDropdown = value => setDropdown(value)
 
-	const date = new Intl.DateTimeFormat('uk-UA', {dateStyle: 'medium'}).format(new Date(order.date))
+	const date = dateFormat(order.date)
 	const productsCount = order.products.length
-	const orderStatusColor = order.status === 'В обробці'
+
+	const orderStatuses = process.env.ORDER_STATUSES
+	const orderStatusColor = order.status === orderStatuses['processed']
 		? 'warning'
-		: order.status === 'Відправлено'
+		: order.status === orderStatuses['sent']
 			? 'success'
 			: 'info'
 
 	return (
 		<TableListItem>
 			<ListCol>{index + 1}</ListCol>
-			<ListCol>{order.id}</ListCol>
+			<ListCol link={{href: '/admin/orders/[id]', as: `/admin/orders/${order.id}`}}>{order.id}</ListCol>
 			<ListCol>{date}</ListCol>
 			<ListCol><Badge color={orderStatusColor}>{order.status}</Badge></ListCol>
 			<ListCol>{`${order.customer.name} ${order.customer.lastName}`}</ListCol>
@@ -47,12 +50,12 @@ export default function OrderItem({order, index}) {
 						<LinksListItem
 							icon="eye"
 							toggleDropdown={toggleDropdown}
-							action={() => {}}
+							action={actions.viewed}
 						>Переглянуто</LinksListItem>
 						<LinksListItem
 							icon="truck"
 							toggleDropdown={toggleDropdown}
-							action={() => {}}
+							action={actions.sent}
 						>Відправлено</LinksListItem>
 						<LinksListItem
 							icon="trash-alt"

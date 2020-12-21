@@ -1,4 +1,5 @@
 import classes from '../../../styles/AdminLayout/components/common.module.scss';
+import Link from 'next/link';
 
 export default function TableList({children, listHeader}) {
 	return (
@@ -33,7 +34,7 @@ export function TableListItem({children}) {
 	)
 }
 
-export function ListCol({children, accent}) {
+export function ListCol({children, accent, link}) {
 	const accents = {
 		high: classes.title,
 		medium: classes.lead,
@@ -42,7 +43,10 @@ export function ListCol({children, accent}) {
 
 	return (
 		<td>
-			<span className={accents[accent] || ''}>{children}</span>
+			{link
+				? <Link href={link.href} as={link.as || ''}><a className={classes.link}>{children}</a></Link>
+				: <span className={accents[accent] || ''}>{children}</span>
+			}
 		</td>
 	)
 }

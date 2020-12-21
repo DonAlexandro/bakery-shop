@@ -5,7 +5,7 @@ import classes from '../../../styles/AdminLayout/categories.module.scss'
 import CategoryForm from '../../../components/AdminLayout/forms/CategoryForm';
 import {db} from '../../../config/firebaseConfig';
 import TableList, {ListBody} from '../../../components/AdminLayout/TableList/index';
-import PageHeader from '../../../components/AdminLayout/PageHeader';
+import PageHeader, {Title, Tools} from '../../../components/AdminLayout/PageHeader';
 import {useCategory} from '../../../hooks/useCategory';
 import {alertContext} from '../../../context/alert/alertContext';
 import {wrapper} from '../../../redux/store';
@@ -97,29 +97,31 @@ export default function Categories() {
 	return (
 		<AdminLayout title={pageName}>
 			<Alert />
-			<PageHeader title={pageName}>
-				{/*ADDITIONAL HEADER TOOLS*/}
-				<li>
-					<form className={classes.formControlWrap} onSubmit={handleSubmit(onSearch)}>
-						<div className={`${classes.formIcon} ${classes.formIconRight}`}>
-							<FontAwesomeIcon icon="search" />
-						</div>
-						<input
-							type="text"
-							placeholder="Пошук категорій"
-							name="search"
-							className={classes.formControl}
-							ref={register}
-						/>
-					</form>
-				</li>
-				<li>
-					<Button
-						icon="plus"
-						color="primary"
-						clickAct={() => activateCategory()}
-					>Додати категорію</Button>
-				</li>
+			<PageHeader>
+				<Title>Категорії</Title>
+				<Tools>
+					<li>
+						<form className={classes.formControlWrap} onSubmit={handleSubmit(onSearch)}>
+							<div className={`${classes.formIcon} ${classes.formIconRight}`}>
+								<FontAwesomeIcon icon="search" />
+							</div>
+							<input
+								type="text"
+								placeholder="Пошук категорій"
+								name="search"
+								className={classes.formControl}
+								ref={register}
+							/>
+						</form>
+					</li>
+					<li>
+						<Button
+							icon="plus"
+							color="primary"
+							clickAct={() => activateCategory()}
+						>Додати категорію</Button>
+					</li>
+				</Tools>
 			</PageHeader>
 			<TableList listHeader={listHeader}>
 				<ListBody>

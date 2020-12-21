@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import AdminLayout from '../../../components/AdminLayout/AdminLayout';
 import classes from '../../../styles/AdminLayout/goods.module.scss'
-import PageHeader from '../../../components/AdminLayout/PageHeader';
+import PageHeader, {Title, Tools} from '../../../components/AdminLayout/PageHeader';
 import TableList, {ListBody} from '../../../components/AdminLayout/TableList/index';
 import RightSidebar from '../../../components/AdminLayout/RightSidebar';
 import ProductForm from '../../../components/AdminLayout/forms/ProductForm';
@@ -89,28 +89,31 @@ export default function Goods() {
 
 	return (
 		<AdminLayout title={pageName}>
-			<PageHeader title={pageName}>
-				<li>
-					<form className={classes.formControlWrap} onSubmit={handleSubmit(onSearch)}>
-						<div className={`${classes.formIcon} ${classes.formIconRight}`}>
-							<FontAwesomeIcon icon="search" />
-						</div>
-						<input
-							type="text"
-							placeholder="Пошук товару за кодом"
-							name="id"
-							className={classes.formControl}
-							ref={register}
-						/>
-					</form>
-				</li>
-				<li>
-					<Button
-						color="primary"
-						icon={'plus'}
-						clickAct={() => activateProduct()}
-					>Додати товар</Button>
-				</li>
+			<PageHeader>
+				<Title>Товари</Title>
+				<Tools>
+					<li>
+						<form className={classes.formControlWrap} onSubmit={handleSubmit(onSearch)}>
+							<div className={`${classes.formIcon} ${classes.formIconRight}`}>
+								<FontAwesomeIcon icon="search" />
+							</div>
+							<input
+								type="text"
+								placeholder="Пошук товару за кодом"
+								name="id"
+								className={classes.formControl}
+								ref={register}
+							/>
+						</form>
+					</li>
+					<li>
+						<Button
+							color="primary"
+							icon={'plus'}
+							clickAct={() => activateProduct()}
+						>Додати товар</Button>
+					</li>
+				</Tools>
 			</PageHeader>
 			<TableList listHeader={listHeader}>
 				<ListBody>

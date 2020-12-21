@@ -1,5 +1,6 @@
-@import "../../utils/variables";
-@import "../../utils/functions";
+@import "styles/utils/variables";
+@import "styles/utils/functions";
+@import "styles/utils/colors";
 
 .btn {
     letter-spacing: 0.02em;
@@ -47,11 +48,14 @@
 }
 
 .btnOutlineLight {
-    color: $base-color;
-    border: 1px solid $light;
+    color: $base-color !important;
+    border: 1px solid $grey300;
     background: transparent;
 
     &:hover, &:active, {
         background: $light;
+        border-color: $light;
+        color: $grey900 !important;
+        text-decoration: none !important;
     }
 }

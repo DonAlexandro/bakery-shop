@@ -12,7 +12,7 @@ export default function Button({children, color, loading = false, actions, block
 				block ? classes.btnBlock : classes.btn,
 				colors[color] || classes.btnPrimary
 			].join(' ')}
-			onClick={actions.onClick}
+			onClick={actions && actions.onClick}
 		>
 			{loading ? 'Завантаження...' : children}
 		</button>

@@ -21,7 +21,8 @@ export default function Register() {
 		showLoading()
 		return signUp(data).then(response => {
 			if (response.error) {
-				showAlert(response.error.message, 'error')
+				showAlert('Щось пішло не так...', 'error')
+				console.error(response.error)
 				hideLoading()
 			} else {
 				showAlert('Ви успішно зареєструвалися!', 'success')
@@ -165,9 +166,9 @@ export default function Register() {
 						{/*-------------------------------------------------------*/}
 
 						<Button
-							text={'Зареєструватися'}
-							styles={[classes.btn, classes.btnPrimary]}
-							loading={loading}/>
+							color="primary"
+							loading={loading}
+						>Зареєструватися</Button>
 					</form>
 					<div className={classes.block}>
 						<p>Вже маєте обліковий запис?</p>

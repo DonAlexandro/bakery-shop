@@ -6,5 +6,10 @@ export const useOrder = () => {
 			.catch(error => ({error}))
 	}
 
-	return {createOrder}
+	const updateOrder = ({id, ...order}) => {
+		return db.collection('orders').doc(id).update(order)
+			.catch(error => ({error}))
+	}
+
+	return {createOrder, updateOrder}
 }
