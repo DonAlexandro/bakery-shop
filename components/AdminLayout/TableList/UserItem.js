@@ -1,24 +1,41 @@
+import {useState} from 'react';
 import {ListCol, ListColIcon, TableListItem} from './index';
+import Badge from '../Badge';
 import DropdownLayout from '../dropdown/DropdownLayout';
-import classes from '../../../styles/AdminLayout/categories.module.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import SmallMenu from '../dropdown/SmallMenu';
 import LinksListItem from '../dropdown/LinksListItem';
-import {useState} from 'react';
+import {dateFormat} from '../../../utils/dateFormat';
 import Button from '../Button';
 
-export default function CategoryItem({category, index, actions, products}) {
+export default function UserItem({user, index, actions}) {
+	const date = user.orders.length !== 0
+		? dateFormat(user.orders[user.orders.length - 1].date)
+		: 'Користувач ще нічого не замовляв'
+
 	const [dropdown, setDropdown] = useState(false)
 
 	const toggleDropdown = value => setDropdown(value)
 
+	const countSum = () => {
+		let sum = 0
+
+		user.orders.forEach(order => {
+			sum += order.sum
+		})
+
+		return sum
+	}
+
 	return (
 		<TableListItem>
 			<ListCol>{index + 1}</ListCol>
-			<ListCol accent="high">{category.name}</ListCol>
-			<ListCol>{products.filter(product => product.category === category.id).length} шт.</ListCol>
+			<ListCol user={user}></ListCol>
+			<ListCol accent="medium">{`${countSum()} грн.`}</ListCol>
+			<ListCol>{`${user.region} обл., ${user.city}`}</ListCol>
+			<ListCol>{date}</ListCol>
+			<ListCol><Badge color={user.isAdmin ? 'success' : 'warning'}>{user.isAdmin ? 'Так' : 'Ні'}</Badge></ListCol>
 			<ListColIcon>
-				{/*---DROPDOWN---*/}
 				<DropdownLayout>
 					<Button
 						styles={{
@@ -28,20 +45,13 @@ export default function CategoryItem({category, index, actions, products}) {
 						}}
 						actions={{onClick: () => setDropdown(prev => !prev)}}
 					><FontAwesomeIcon icon="ellipsis-h" /></Button>
-					{dropdown && <SmallMenu>
+					{dropdown && <SmallMenu right>
 						<LinksListItem
-							icon={'edit'}
+							icon="clipboard-list"
 							toggleDropdown={toggleDropdown}
-							action={actions.edit}
-						>Редагувати категорію</LinksListItem>
-						<LinksListItem
-							icon={'trash-alt'}
-							toggleDropdown={toggleDropdown}
-							action={actions.delete}
-						>Видалити категорію</LinksListItem>
+						>Замовлення</LinksListItem>
 					</SmallMenu>}
 				</DropdownLayout>
-				{/*--------------*/}
 			</ListColIcon>
 		</TableListItem>
 	)

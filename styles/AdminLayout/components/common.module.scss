@@ -50,6 +50,8 @@
 
     .subtitle {
         margin-top: .8rem;
+        color: $soft-color;
+        font-size: 14px;
     }
 }
 
@@ -61,20 +63,49 @@
     }
 }
 
+.tbListWrapper {
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid $light
+}
+
 .tbList {
     width: 100%;
     color: $soft-color;
     font-size: 13px;
-    border-collapse: separate;
-    border-spacing: 0 10px;
+
+    &.tbListSeparated {
+        border-collapse: separate;
+        border-spacing: 0 10px;
+
+        tr {
+            box-shadow: rgba(54, 74, 99, 0.05) 0px 1px 3px 0px;
+        }
+
+        th {
+            padding: 16px 8px;
+        }
+    }
+
+    &.tbListBordered {
+
+        tbody {
+
+            tr {
+                border-top: 1px solid $light;
+            }
+        }
+
+        th {
+            padding: 11px 8px;
+        }
+    }
 
     tr {
         background: #fff;
-        box-shadow: rgba(54, 74, 99, 0.05) 0px 1px 3px 0px;
     }
 
     th {
-        padding: 16px 8px;
         font-weight: 500;
     }
 
@@ -92,6 +123,44 @@
 
             &:hover {
                 text-decoration: none;
+            }
+        }
+
+        .userCard {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+
+            .userAvatar {
+                @include center-content;
+
+                width: 40px;
+                height: 40px;
+                font-size: 14px;
+                letter-spacing: .06em;
+                border-radius: 50%;
+                text-transform: uppercase;
+                font-weight: 700;
+                color: #fff;
+            }
+
+            .userInfo {
+                margin-left: 1rem;
+                display: flex;
+                flex-direction: column;
+
+                .name {
+                    font-weight: 500;
+                    color: $secondary-color;
+                    line-height: 1.4;
+                    display: block;
+                    margin-bottom: .3em;
+                }
+
+                .email {
+                    font-size: 11px;
+                    color: $soft-color
+                }
             }
         }
     }

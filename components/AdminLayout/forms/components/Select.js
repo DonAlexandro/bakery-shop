@@ -1,12 +1,12 @@
 import classes from '../../../../styles/AdminLayout/components/forms.module.scss';
 
-export default function Select({children, id, onRef, styles, name}) {
+export default function Select({children, id, onRef, name}) {
 	return (
 		<div className={classes.formControlSelect}>
 			<select
 				name={name}
 				id={id}
-				className={styles.join(' ')}
+				className={classes.formControl}
 				ref={onRef}
 			>
 				{children}

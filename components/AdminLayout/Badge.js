@@ -5,6 +5,7 @@ export default function Badge({children, color}) {
 		warning: classes.badgeWarning,
 		success: classes.badgeSuccess,
 		info: classes.badgeInfo,
+		danger: classes.badgeDanger,
 	}
 
 	return (

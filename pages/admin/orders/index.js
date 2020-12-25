@@ -1,6 +1,4 @@
 import AdminLayout from '../../../components/AdminLayout/AdminLayout';
-import classes from '../../../styles/AdminLayout/components/forms.module.scss';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import PageHeader, {Title, Tools} from '../../../components/AdminLayout/PageHeader';
 import TableList, {ListBody} from '../../../components/AdminLayout/TableList';
 import {wrapper} from '../../../redux/store';
@@ -8,10 +6,13 @@ import {db} from '../../../config/firebaseConfig';
 import OrderItem from '../../../components/AdminLayout/TableList/OrderItem';
 import {useOrder} from '../../../hooks/useOrder';
 import {alertContext} from '../../../context/alert/alertContext';
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import Alert from '../../../components/Alert';
+import Input from '../../../components/AdminLayout/forms/components/Input';
+import {useForm} from 'react-hook-form';
 
-export default function Orders({orders}) {
+export default function Orders({orders: serverOrders}) {
+	// Plane variables
 	const pageName = 'Замовлення'
 	const orderStatuses = process.env.ORDER_STATUSES
 
@@ -19,18 +20,45 @@ export default function Orders({orders}) {
 		'#', 'Код замовлення', 'Дата', 'Статус', 'Клієнт', 'Товари', 'До сплати', ''
 	]
 
-	const {updateOrder} = useOrder()
+	// Local States
+	const [orders, setOrders] = useState(serverOrders)
+
+	// Hooks
+	const {updateOrder, deleteOrder} = useOrder()
 	const {showAlert} = useContext(alertContext)
+	const {register, handleSubmit} = useForm()
+
+	// Functions
+	const requestEnd = (message, type) => {
+		console.error(message)
+		showAlert('Щось пішло не так при оновленні статусу...', 'error')
+	}
 
 	const changeStatus = (order, status) => {
 		order.status = status
 
 		updateOrder(order).then(response => {
 			if (response?.error) {
-				console.log(response.error)
-				showAlert('Щось пішло не так при оновленні статусу...', 'error')
+				requestEnd(response.error.message, 'error')
 			}
 		})
+	}
+
+	const removeOrder = id => {
+		if (confirm('Після видалення, відновити це замовлення буде не можливо. Продовжити?')) {
+			return deleteOrder(id).then(response => {
+				if (response?.error) {
+					requestEnd(response.error.message, 'error')
+				} else {
+					showAlert('Замовлення успішно видалено!', 'success')
+					setOrders(prev => prev.filter(order => order.id !== id))
+				}
+			})
+		}
+	}
+
+	const onSearch = ({id}) => {
+		id === '' ? setOrders(serverOrders) : setOrders(orders.filter(order => order.id.toLowerCase().includes(id.toLowerCase())))
 	}
 
 	return (
@@ -40,15 +68,13 @@ export default function Orders({orders}) {
 				<Title>Замовлення</Title>
 				<Tools>
 					<li>
-						<form className={classes.formControlWrap}>
-							<div className={`${classes.formIcon} ${classes.formIconRight}`}>
-								<FontAwesomeIcon icon="search" />
-							</div>
-							<input
+						<form onSubmit={handleSubmit(onSearch)}>
+							<Input
 								type="text"
 								placeholder="Пошук за кодом"
 								name="id"
-								className={classes.formControl}
+								icon="search"
+								onRef={register}
 							/>
 						</form>
 					</li>
@@ -63,7 +89,8 @@ export default function Orders({orders}) {
 							key={order.id}
 							actions={{
 								viewed: () => changeStatus(order, orderStatuses['viewed']),
-								sent: () => changeStatus(order, orderStatuses['sent'])
+								sent: () => changeStatus(order, orderStatuses['sent']),
+								delete: () => removeOrder(order.id)
 							}}
 						/>
 					)}
@@ -73,7 +100,7 @@ export default function Orders({orders}) {
 	)
 }
 
-export const getStaticProps = wrapper.getStaticProps(async ({store}) => {
+export const getStaticProps = wrapper.getStaticProps(async () => {
 	let orders = []
 
 	await db.collection('orders').orderBy('date', 'desc').get().then(snapshot => {

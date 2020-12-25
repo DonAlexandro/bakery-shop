@@ -1,12 +1,11 @@
 import {useForm} from 'react-hook-form';
-import {useContext, useEffect, useState} from 'react';
+import {useContext} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import FormLayout from './FormLayout';
-import classes from '../../../styles/AdminLayout/components/rsForm.module.scss';
 import {Col12, Col6, Row} from '../../Grid';
 import Button from '../Button';
 import {loadingContext} from '../../../context/loading/loadingContext';
-import {addProduct, editProduct, setCategories} from '../../../redux/actions';
+import {addProduct, editProduct} from '../../../redux/actions';
 import Select from './components/Select';
 import File from './components/File';
 import {useImage} from '../../../hooks/useImage';
@@ -14,6 +13,7 @@ import {alertContext} from '../../../context/alert/alertContext';
 import Alert from '../../Alert';
 import {useProduct} from '../../../hooks/useProduct';
 import Image from 'next/image';
+import Input, {FormGroup, HelperText, Label, Textarea} from './components/Input';
 
 export default function ProductForm({toggleSidebar, product}) {
 	const {loading, showLoading, hideLoading} = useContext(loadingContext)
@@ -95,57 +95,54 @@ export default function ProductForm({toggleSidebar, product}) {
 			<Alert />
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Row>
-					{product && <input
+					{product && <Input
 						type="hidden"
 						name="id"
-						defaultValue={product.id}
-						ref={register}
+						value={product.id}
+						onRef={register}
 					/>}
 					<Col12>
-						<div className={classes.formGroup}>
-							<label className={classes.label} htmlFor="name">Назва товару</label>
-							<input
+						<FormGroup>
+							<Label inputName="name">Назва товару</Label>
+							<Input
 								id="name"
 								type="text"
 								name="name"
-								className={classes.formControl}
-								defaultValue={product ? product.name : ''}
-								ref={register({
+								value={product ? product.name : ''}
+								onRef={register({
 									required: 'Введіть, будь ласка, назву товару'
 								})}
 							/>
-							{errors.name && <span className={classes.invalidFeedback}>{errors.name.message}</span>}
-						</div>
+							{errors.name && <HelperText>{errors.name.message}</HelperText>}
+						</FormGroup>
 					</Col12>
 					<Col12>
-						<div className={classes.formGroup}>
-							<label className={classes.label} htmlFor="description">Опис товару</label>
-							<textarea
+						<FormGroup>
+							<Label inputName="description">Опис товару</Label>
+							<Textarea
 								name="description"
 								id="description"
-								className={classes.formControl}
-								defaultValue={product ? product.description : ''}
-								ref={register({
+								value={product ? product.description : ''}
+								onRef={register({
 									required: 'Введіть, будь ласка, опис товару',
 									minLength: {
 										value: 15,
 										message: 'Опис товару повинен містити мінімум 15 символів'
 									}
 								})}
-							></textarea>
-							{errors.description && <span className={classes.invalidFeedback}>{errors.description.message}</span>}
-						</div>
+							/>
+							{errors.description && <HelperText>{errors.description.message}</HelperText>}
+						</FormGroup>
 					</Col12>
 					<Col6>
-						<div className={classes.formGroup}>
-							<label className={classes.label} htmlFor="price">Ціна товару</label>
-							<input
+						<FormGroup>
+							<Label inputName="price">Ціна товару</Label>
+							<Input
 								id="price"
 								type="number"
 								name="price"
-								defaultValue={product ? product.price : ''}
-								className={classes.formControl}
-								ref={register({
+								value={product ? product.price : ''}
+								onRef={register({
 									required: 'Введіть, будь ласка, ціну товару',
 									min: {
 										value: 1,
@@ -153,19 +150,18 @@ export default function ProductForm({toggleSidebar, product}) {
 									}
 								})}
 							/>
-							{errors.price && <span className={classes.invalidFeedback}>{errors.price.message}</span>}
-						</div>
+							{errors.price && <HelperText>{errors.price.message}</HelperText>}
+						</FormGroup>
 					</Col6>
 					<Col6>
-						<div className={classes.formGroup}>
-							<label className={classes.label} htmlFor="amount">Початкова кількість</label>
-							<input
+						<FormGroup>
+							<Label inputName="amount">Початкова кількість</Label>
+							<Input
 								id="amount"
 								type="number"
 								name="amount"
-								defaultValue={product ? product.amount : ''}
-								className={classes.formControl}
-								ref={register({
+								value={product ? product.amount : ''}
+								onRef={register({
 									required: 'Введіть, будь ласка, кількість товару',
 									min: {
 										value: 0,
@@ -173,16 +169,15 @@ export default function ProductForm({toggleSidebar, product}) {
 									}
 								})}
 							/>
-							{errors.amount && <span className={classes.invalidFeedback}>{errors.amount.message}</span>}
-						</div>
+							{errors.amount && <HelperText>{errors.amount.message}</HelperText>}
+						</FormGroup>
 					</Col6>
 					<Col12>
-						<div className={classes.formGroup}>
-							<label className={classes.label} htmlFor="category">Категорія</label>
+						<FormGroup>
+							<Label inputName="category">Категорія</Label>
 							<Select
 								name="category"
 								id="category"
-								styles={[classes.formControl]}
 								onRef={register({
 									required: 'Виберіть, будь ласка, категорію'
 								})}
@@ -191,11 +186,11 @@ export default function ProductForm({toggleSidebar, product}) {
 									<option key={cat.id} value={cat.id} selected={cat.id === product?.category}>{cat.name}</option>
 								)}
 							</Select>
-							{errors.category && <span className={classes.invalidFeedback}>{errors.category.message}</span>}
-						</div>
+							{errors.category && <HelperText>{errors.category.message}</HelperText>}
+						</FormGroup>
 					</Col12>
 					{product && <Col12>
-						<label className={classes.label}>Теперішнє зображення товару</label>
+						<Label>Теперішнє зображення товару</Label>
 						<Image
 							src={product.imageFullPath}
 							alt={product.name}
@@ -204,40 +199,41 @@ export default function ProductForm({toggleSidebar, product}) {
 						/>
 					</Col12>}
 					{!product && <Col12>
-						<div className={classes.formGroup}>
-							<label className={classes.label} htmlFor="image">{product ? 'Нове зображення товару' : 'Зображення товару'}</label>
+						<FormGroup>
+							<Label inputName="image">{product ? 'Нове зображення товару' : 'Зображення товару'}</Label>
 							<File>
-								<input
+								<Input
 									id="image"
 									type="file"
 									name="image"
-									ref={register({
+									onRef={register({
 										required: 'Завантажте, будь ласка, зображення'
 									})}
-									onClick={() => clearErrors(['image'])}
-									onChange={e => {
-										if (!allowedImageExt.includes(e.target.files[0]?.type)) {
-											setError('image', {
-												type: 'manual',
-												message: 'Невірний формат. Дозволено загружати лише файли з розширенням png, jpg i webp'
-											})
-											setValue('image', null)
-										} else if (e.target.files[0]?.size >= 5000000) {
-											setError('image', {
-												type: 'manual',
-												message: 'Файл повинен бути не більшим 5мб'
-											})
-											setValue('image', null)
+									actions={{
+										onClick: () => clearErrors(['image']),
+										onChange: e => {
+											if (!allowedImageExt.includes(e.target.files[0]?.type)) {
+												setError('image', {
+													type: 'manual',
+													message: 'Невірний формат. Дозволено загружати лише файли з розширенням png, jpg i webp'
+												})
+												setValue('image', null)
+											} else if (e.target.files[0]?.size >= 5000000) {
+												setError('image', {
+													type: 'manual',
+													message: 'Файл повинен бути не більшим 5мб'
+												})
+												setValue('image', null)
+											}
 										}
 									}}
 								/>
 							</File>
-							{errors.image && <span className={classes.invalidFeedback}>{errors.image.message}</span>}
-						</div>
+							{errors.image && <HelperText>{errors.image.message}</HelperText>}
+						</FormGroup>
 					</Col12>}
 					<Col12>
 						<Button
-							color="primary"
 							loading={loading}
 							icon={product ? 'edit' : 'plus'}
 						>{product ? 'Оновити' : 'Додати'}</Button>

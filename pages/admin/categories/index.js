@@ -17,6 +17,7 @@ import Button from '../../../components/AdminLayout/Button';
 import CategoryItem from '../../../components/AdminLayout/TableList/CategoryItem';
 import RightSidebar from '../../../components/AdminLayout/RightSidebar';
 import {useProduct} from '../../../hooks/useProduct';
+import Input from '../../../components/AdminLayout/forms/components/Input';
 
 export default function Categories() {
 	// Plain variables
@@ -98,27 +99,23 @@ export default function Categories() {
 		<AdminLayout title={pageName}>
 			<Alert />
 			<PageHeader>
-				<Title>Категорії</Title>
+				<Title>{pageName}</Title>
 				<Tools>
 					<li>
-						<form className={classes.formControlWrap} onSubmit={handleSubmit(onSearch)}>
-							<div className={`${classes.formIcon} ${classes.formIconRight}`}>
-								<FontAwesomeIcon icon="search" />
-							</div>
-							<input
+						<form onSubmit={handleSubmit(onSearch)}>
+							<Input
 								type="text"
 								placeholder="Пошук категорій"
 								name="search"
-								className={classes.formControl}
-								ref={register}
+								onRef={register}
+								icon="search"
 							/>
 						</form>
 					</li>
 					<li>
 						<Button
 							icon="plus"
-							color="primary"
-							clickAct={() => activateCategory()}
+							actions={{onClick: () => activateCategory()}}
 						>Додати категорію</Button>
 					</li>
 				</Tools>
@@ -150,7 +147,7 @@ export const getStaticProps = wrapper.getStaticProps(async ({store}) => {
 	let categories = []
 	let products = []
 
-	await db.collection('categories').get().then(snapshot => {
+	await db.collection('categories').orderBy('name', 'asc').get().then(snapshot => {
 		snapshot.forEach(cat => categories.push({id: cat.id, ...cat.data()}))
 	})
 

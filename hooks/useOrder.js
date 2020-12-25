@@ -11,5 +11,10 @@ export const useOrder = () => {
 			.catch(error => ({error}))
 	}
 
-	return {createOrder, updateOrder}
+	const deleteOrder = id => {
+		return db.collection('orders').doc(id).delete(id)
+			.catch(error => ({error}))
+	}
+
+	return {createOrder, updateOrder, deleteOrder}
 }

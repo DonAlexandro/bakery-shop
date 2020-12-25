@@ -53,8 +53,10 @@ export default function OrderDetails({order: serverOrder}) {
 							tag="a"
 							link={{href: '/admin/orders'}}
 							icon="arrow-left"
-							color="outlineLight"
-							background="white"
+							styles={{
+								color: 'outlineLight',
+								background: 'white'
+							}}
 						>Назад</Button>
 					</li>
 				</Tools>
@@ -103,10 +105,13 @@ export default function OrderDetails({order: serverOrder}) {
 					<Title tag="h6">Замовляємі товари</Title>
 				</PageHeader>
 				<Box m="mb4">
-					<TableList listHeader={listHeader}>
+					<TableList
+						type="bordered"
+						listHeader={listHeader}
+					>
 						<ListBody>
 							{order.products.map((product, index) =>
-								<OrderProductItem product={product} index={index}/>
+								<OrderProductItem product={product} index={index} key={product.id}/>
 							)}
 						</ListBody>
 					</TableList>

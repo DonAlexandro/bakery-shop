@@ -12,6 +12,7 @@ import {useImage} from '../../../hooks/useImage';
 import {useProduct} from '../../../hooks/useProduct';
 import {useDispatch} from 'react-redux';
 import {editProduct} from '../../../redux/actions';
+import Input, {FormGroup, HelperText, Label} from '../forms/components/Input';
 
 export default function ProductImage({product, toggleModal}) {
 	const {
@@ -77,41 +78,42 @@ export default function ProductImage({product, toggleModal}) {
 						height={300}
 					/>
 				</div>
-				<div className={classes.formGroup}>
-					<label className={classes.label} htmlFor="image">Нове зображення</label>
+				<FormGroup>
+					<Label inputName="image">Нове зображення</Label>
 					<File>
-						<input
+						<Input
 							id="image"
 							type="file"
 							name="image"
-							ref={register({
+							onRef={register({
 								required: 'Виберіть, будь ласка, зображення'
 							})}
-							onClick={() => clearErrors(['image'])}
-							onChange={e => {
-								if (!allowedImageExt.includes(e.target.files[0]?.type)) {
-									setError('image', {
-										type: 'manual',
-										message: 'Невірний формат. Дозволено загружати лише файли з розширенням png, jpg i webp'
-									})
-									setValue('image', null)
-								} else if (e.target.files[0]?.size >= 5000000) {
-									setError('image', {
-										type: 'manual',
-										message: 'Файл повинен бути не більшим 5мб'
-									})
-									setValue('image', null)
+							actions={{
+								onClick: () => clearErrors(['image']),
+								onChange: e => {
+									if (!allowedImageExt.includes(e.target.files[0]?.type)) {
+										setError('image', {
+											type: 'manual',
+											message: 'Невірний формат. Дозволено загружати лише файли з розширенням png, jpg i webp'
+										})
+										setValue('image', null)
+									} else if (e.target.files[0]?.size >= 5000000) {
+										setError('image', {
+											type: 'manual',
+											message: 'Файл повинен бути не більшим 5мб'
+										})
+										setValue('image', null)
+									}
 								}
 							}}
 						/>
 					</File>
-					{errors.image && <span className={classes.invalidFeedback}>{errors.image.message}</span>}
-				</div>
+					{errors.image && <HelperText>{errors.image.message}</HelperText>}
+				</FormGroup>
 			</ModalContent>
 			<ModalFooter>
 				<Button
-					icon={'edit'}
-					color="primary"
+					icon="edit"
 					loading={loading}
 				>Оновити</Button>
 			</ModalFooter>

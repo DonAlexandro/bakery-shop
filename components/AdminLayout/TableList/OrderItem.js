@@ -1,13 +1,13 @@
 import {useState} from 'react';
 import {ListCol, ListColIcon, TableListItem} from './index';
 import DropdownLayout from '../dropdown/DropdownLayout';
-import classes from '../../../styles/AdminLayout/goods.module.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import SmallMenu from '../dropdown/SmallMenu';
 import LinksListItem from '../dropdown/LinksListItem';
 import {pluralize} from '../../../utils/pluraliza';
 import {dateFormat} from '../../../utils/dateFormat';
 import Badge from '../Badge';
+import Button from '../Button';
 
 export default function OrderItem({order, index, actions}) {
 	const [dropdown, setDropdown] = useState(false)
@@ -39,13 +39,14 @@ export default function OrderItem({order, index, actions}) {
 			<ListCol accent="medium">{order.sum} грн.</ListCol>
 			<ListColIcon>
 				<DropdownLayout>
-					<button className={[
-						classes.btn,
-						classes.btnRound,
-						classes.btnOutlineLight,
-						classes.borderTransparent,
-						classes.btnTrigger
-					].join(' ')} onClick={() => setDropdown(prev => !prev)}><FontAwesomeIcon icon="ellipsis-h" /></button>
+					<Button
+						styles={{
+							size: 'sm',
+							color: 'outlineLight',
+							transparent: true
+						}}
+						actions={{onClick: () => setDropdown(prev => !prev)}}
+					><FontAwesomeIcon icon="ellipsis-h" /></Button>
 					{dropdown && <SmallMenu right>
 						<LinksListItem
 							icon="eye"
@@ -60,7 +61,7 @@ export default function OrderItem({order, index, actions}) {
 						<LinksListItem
 							icon="trash-alt"
 							toggleDropdown={toggleDropdown}
-							action={() => {}}
+							action={actions.delete}
 						>Видалити замовлення</LinksListItem>
 					</SmallMenu>}
 				</DropdownLayout>
