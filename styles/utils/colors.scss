@@ -29,6 +29,26 @@
     background: $primary-color;
 }
 
+.bgSuccess {
+    color: #fff;
+    background: $success-color;
+}
+
+.bgDanger {
+    color: #fff;
+    background: $danger-color;
+}
+
+.bgWarning {
+    color: #000;
+    background: $warning-color;
+}
+
+.bgInfo {
+    color: #fff;
+    background: $info-color;
+}
+
 .bgPurple {
     color: #fff;
     background: $purple;

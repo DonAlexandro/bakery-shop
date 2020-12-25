@@ -23,6 +23,13 @@
         opacity: .65;
         cursor: default;
     }
+
+    &.btnSm {
+        padding: .25rem .75rem;
+        font-size: .75rem;
+        line-height: 1.25rem;
+        border-radius: 3px;
+    }
 }
 
 .btnRound {

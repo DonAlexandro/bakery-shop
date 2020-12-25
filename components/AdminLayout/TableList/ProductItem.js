@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import SmallMenu from '../dropdown/SmallMenu';
 import LinksListItem from '../dropdown/LinksListItem';
 import {useState} from 'react';
+import Button from '../Button';
 
 export default function ProductItem({product, index, categories, actions}) {
 	const [dropdown, setDropdown] = useState(false)
@@ -18,15 +19,17 @@ export default function ProductItem({product, index, categories, actions}) {
 			<ListCol>{product.id}</ListCol>
 			<ListCol accent="medium">{product.price} грн.</ListCol>
 			<ListCol>{product.amount}</ListCol>
-			<ListCol>{categories.filter(cat => cat.id === product.category)[0].name || 'Без категорії'}</ListCol>
+			<ListCol>{categories.filter(cat => cat.id === product.category)[0].name}</ListCol>
 			<ListColIcon>
 				<DropdownLayout>
-					<button className={[
-						classes.btn,
-						classes.btnRound,
-						classes.btnOutlineLight,
-						classes.borderTransparent,
-					].join(' ')} onClick={() => setDropdown(prev => !prev)}><FontAwesomeIcon icon="ellipsis-h" /></button>
+					<Button
+						styles={{
+							size: 'sm',
+							transparent: true,
+							color: 'outlineLight'
+						}}
+						actions={{onClick: () => setDropdown(prev => !prev)}}
+					><FontAwesomeIcon icon="ellipsis-h" /></Button>
 					{dropdown && <SmallMenu right>
 						<LinksListItem
 							icon={'image'}

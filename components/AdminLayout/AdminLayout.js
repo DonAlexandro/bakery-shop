@@ -5,7 +5,7 @@ import {
 	faCommentDots, faCogs, faCog, faSearch, faUser,
 	faAngleDown, faAngleUp, faSignOutAlt, faPlus, faList,
 	faEllipsisH, faTools, faEye, faEdit, faTrashAlt,
-	faImage, faTruck, faArrowLeft
+	faImage, faTruck, faArrowLeft, faClipboardList
 } from '@fortawesome/free-solid-svg-icons'
 import Navbar from './Navbar';
 // import {useRequireAuth} from '../../hooks/useRequireAuth';
@@ -17,7 +17,7 @@ library.add(
 	faCommentDots, faCogs, faCog, faSearch, faUser,
 	faAngleDown, faAngleUp, faSignOutAlt, faPlus, faList,
 	faEllipsisH, faTools, faEye, faEdit, faTrashAlt,
-	faImage, faTruck, faArrowLeft
+	faImage, faTruck, faArrowLeft, faClipboardList
 )
 
 export default function AdminLayout({children, title = 'Сторінка'}) {

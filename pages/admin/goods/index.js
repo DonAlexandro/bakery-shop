@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import AdminLayout from '../../../components/AdminLayout/AdminLayout';
 import classes from '../../../styles/AdminLayout/goods.module.scss'
 import PageHeader, {Title, Tools} from '../../../components/AdminLayout/PageHeader';
@@ -18,6 +17,7 @@ import {useImage} from '../../../hooks/useImage';
 import Modal from '../../../components/AdminLayout/Modal';
 import ProductImage from '../../../components/AdminLayout/modals/ProductImage';
 import {useForm} from 'react-hook-form';
+import Input from '../../../components/AdminLayout/forms/components/Input';
 
 export default function Goods() {
 	const pageName = 'Товари'
@@ -93,24 +93,20 @@ export default function Goods() {
 				<Title>Товари</Title>
 				<Tools>
 					<li>
-						<form className={classes.formControlWrap} onSubmit={handleSubmit(onSearch)}>
-							<div className={`${classes.formIcon} ${classes.formIconRight}`}>
-								<FontAwesomeIcon icon="search" />
-							</div>
-							<input
+						<form onSubmit={handleSubmit(onSearch)}>
+							<Input
 								type="text"
 								placeholder="Пошук товару за кодом"
 								name="id"
-								className={classes.formControl}
-								ref={register}
+								icon="search"
+								onRef={register}
 							/>
 						</form>
 					</li>
 					<li>
 						<Button
-							color="primary"
-							icon={'plus'}
-							clickAct={() => activateProduct()}
+							icon="plus"
+							actions={{onClick: () => activateProduct()}}
 						>Додати товар</Button>
 					</li>
 				</Tools>
@@ -153,7 +149,7 @@ export const getStaticProps = wrapper.getStaticProps(async ({store}) => {
 		snapshot.forEach(cat => categories.push({id: cat.id, ...cat.data()}))
 	})
 
-	await db.collection('products').get().then(snapshot => {
+	await db.collection('products').orderBy('name', 'asc').get().then(snapshot => {
 		snapshot.forEach(product => products.push({id: product.id, ...product.data()}))
 	})
 

@@ -1,8 +1,9 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import button from '../../styles/AdminLayout/components/buttons.module.scss';
+import common from '../../styles/AdminLayout/components/common.module.scss';
 import Link from 'next/link';
 
-export default function Button({children, color, tag = 'button', link, background, loading = false, icon, clickAct}) {
+export default function Button({children, styles = {}, tag = 'button', link, loading = false, icon, actions}) {
 	const colors = {
 		primary: button.btnPrimary,
 		outlineLight: button.btnOutlineLight
@@ -12,12 +13,18 @@ export default function Button({children, color, tag = 'button', link, backgroun
 		white: button.bgWhite
 	}
 
+	const sizes = {
+		sm: button.btnSm
+	}
+
 	const attrs = {
-		onClick: clickAct,
+		onClick: actions?.onClick,
 		className: [
 			button.btn,
-			colors[color] || button.btnPrimary,
-			background && backgrounds[background]
+			colors[styles.color] || button.btnPrimary,
+			styles.background && backgrounds[styles.background],
+			styles.size && sizes[styles.size],
+			styles.transparent && common.borderTransparent
 		].join(' '),
 		disabled: loading
 	}

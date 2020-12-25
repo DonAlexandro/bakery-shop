@@ -14,11 +14,11 @@ export const useAuth = () => useContext(authContext)
 export const useAuthProvider = () => {
 	const [user, setUser] = useState(null)
 
-	const createUser = ({emailVerified, ...user}) => {
-		return db.collection('users').doc(user.id).set({...user})
+	const createUser = user => {
+		return db.collection('users').doc(user.id).set(user)
 			.then(() => {
-				setUser({emailVerified, ...user})
-				return {emailVerified, ...user}
+				setUser(user)
+				return user
 			})
 			.catch(error => ({error}))
 	}
@@ -26,12 +26,11 @@ export const useAuthProvider = () => {
 	const signUp = ({email, password, ...data}) => {
 		return auth.createUserWithEmailAndPassword(email, password)
 			.then(({user}) => {
-				auth.currentUser.sendEmailVerification()
 				return createUser({
 					isAdmin: false,
 					id: user.uid,
-					emailVerified: user.emailVerified,
 					email,
+					date: Date.now(),
 					...data
 				})
 			})
@@ -51,7 +50,7 @@ export const useAuthProvider = () => {
 	const getUserAdditionalData = user => {
 		return db.collection('users').doc(user.uid).get()
 			.then(userData => {
-				if(userData.data()) setUser({emailVerified: user.emailVerified, ...userData.data()})
+				if(userData.data()) setUser(userData.data())
 			})
 			.catch(error => ({error}))
 	}
@@ -78,7 +77,7 @@ export const useAuthProvider = () => {
 	useEffect(() => {
 		if (user?.id) {
 			const unsub = db.collection('users').doc(user.id).onSnapshot(doc => {
-				setUser({emailVerified: user.emailVerified, ...doc.data()})
+				setUser(doc.data())
 			})
 
 			return () => unsub()
