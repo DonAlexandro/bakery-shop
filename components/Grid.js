@@ -23,3 +23,19 @@ export const Col6 = ({children}) => {
 		</div>
 	)
 }
+
+export const Col3 = ({children}) => {
+	return (
+		<div className={classes.col3}>
+			{children}
+		</div>
+	)
+}
+
+export const Col9 = ({children}) => {
+	return (
+		<div className={classes.col9}>
+			{children}
+		</div>
+	)
+}

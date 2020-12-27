@@ -1,0 +1,43 @@
+@import "styles/utils/colors.module";
+@import "styles/utils/mixins";
+
+.listIcon {
+    width: 100%;
+
+    .listIconItem {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &:not(:last-child) {
+            margin-bottom: 25px;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+
+            .label {
+                color: $soft-color;
+                font-size: .8125rem;
+            }
+
+            .count {
+                font-size: 1.25rem;
+                font-weight: 500;
+                color: $secondary-color;
+                margin-top: .5rem;
+            }
+        }
+
+        .icon {
+            @include center-content;
+
+            font-size: 1.25rem;
+            height: 44px;
+            width: 44px;
+            border-radius: 6px;
+        }
+    }
+}

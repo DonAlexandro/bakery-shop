@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classes from '../../styles/MainLayout/components/header.module.scss'
 import Image from 'next/image';
 import {useAuth} from '../../hooks/useAuth';
+import {db} from '../../config/firebaseConfig';
+import {useEffect, useState} from 'react';
 
 export default function Header() {
 	const router = useRouter()
@@ -17,10 +19,22 @@ export default function Header() {
 		{href: '/contacts', text: 'Контакти'},
 	]
 
+	const [settings, setSettings] = useState({})
+
+	useEffect(() => {
+		async function load() {
+			await db.collection('settings').doc(process.env.SETTINGS_ID).get().then(doc => {
+				setSettings(doc.data())
+			})
+		}
+
+		load()
+	}, [])
+
 	return (
 		<header className={classes.header}>
 			<div className={classes.logo}>
-				<h1>Міська пекарня</h1>
+				<h1>{settings.siteName}</h1>
 			</div>
 			<nav className={classes.nav}>
 				{links.map((link, index) =>

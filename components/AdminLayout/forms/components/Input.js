@@ -1,7 +1,7 @@
 import classes from '../../../../styles/AdminLayout/components/forms.module.scss'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
-export default function Input({type, onRef, icon, name, id = '', placeholder = '', value, actions}) {
+export default function Input({type = 'text', onRef, icon, name, id = '', placeholder = '', value, actions}) {
 	const defaultTemplate = <input
 								type={type}
 								id={id}
@@ -46,9 +46,12 @@ export function FormGroup({children}) {
 	)
 }
 
-export function Label({children, inputName = ''}) {
+export function Label({children, inputName = '', sublabel = ''}) {
 	return (
-		<label htmlFor={inputName} className={classes.label}>{children}</label>
+		<>
+			<label htmlFor={inputName} className={classes.label}>{children}</label>
+			<span className={classes.sublabel}>{sublabel}</span>
+		</>
 	)
 }
 

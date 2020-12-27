@@ -1,0 +1,9 @@
+@import "styles/utils/mixins";
+
+.center {
+    @include center-content;
+}
+
+.grow1 {
+    flex-grow: 1;
+}

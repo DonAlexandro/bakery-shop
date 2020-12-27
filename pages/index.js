@@ -1,7 +1,8 @@
 import classes from '../styles/MainLayout/home.module.scss'
 import MainLayout from '../components/MainLayout/MainLayout'
+import {db} from '../config/firebaseConfig';
 
-export default function Home() {
+export default function Home({settings}) {
 	return (
 		<MainLayout
 			title={'Головна'}
@@ -19,7 +20,7 @@ export default function Home() {
 						<img src="/cookies.jpg" alt="thumb" />
 					</div>
 					<div className={classes.sticker}>
-						<h5>Любимо пекти</h5>
+						<h5>{settings.sticker}</h5>
 					</div>
 					<div className={classes.block}>
 						<img src="/bread.jpg" alt="thumb" />
@@ -32,4 +33,14 @@ export default function Home() {
 			</div>
 		</MainLayout>
 	)
+}
+
+export async function getServerSideProps() {
+	let settings = null
+
+	await db.collection('settings').doc(process.env.SETTINGS_ID).get().then(doc => {
+		settings = doc.data()
+	})
+
+	return {props: {settings}}
 }

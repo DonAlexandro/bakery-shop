@@ -1,0 +1,28 @@
+@import "utils/variables";
+
+.detailList {
+    font-size: 14px;
+
+    &.admin {
+        .dlLabel {
+            color: $grey500;
+        }
+    }
+
+    &.main {
+        .dlLabel {
+            color: $brown;
+        }
+    }
+
+    .dlItem {
+        padding: 12px 0;
+        display: flex;
+        justify-content: space-between;
+
+
+        .dlValue {
+            font-weight: 500;
+        }
+    }
+}

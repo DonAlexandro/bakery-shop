@@ -5,12 +5,12 @@ import PageHeader, {Title, Tools} from '../../../components/AdminLayout/PageHead
 import {useRouter} from 'next/router';
 import Button from '../../../components/AdminLayout/Button';
 import Card from '../../../components/AdminLayout/Card';
-import DetailList, {Item} from '../../../components/AdminLayout/DetailList';
+import DetailList, {Item} from '../../../components/DetailList';
 import {Col6, Row} from '../../../components/Grid';
 import {dateFormat} from '../../../utils/dateFormat';
 import TableList, {ListBody} from '../../../components/AdminLayout/TableList';
 import OrderProductItem from '../../../components/AdminLayout/TableList/OrderProductItem';
-import Box from '../../../components/AdminLayout/Box';
+import Box from '../../../components/Box';
 import Jumbotron from '../../../components/AdminLayout/Jumbotron';
 
 export default function OrderDetails({order: serverOrder}) {

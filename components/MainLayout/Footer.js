@@ -1,10 +1,24 @@
 import classes from '../../styles/MainLayout/components/footer.module.scss'
+import {db} from '../../config/firebaseConfig';
+import {useEffect, useState} from 'react';
 
 export default function Footer() {
+	const [settings, setSettings] = useState({})
+
+	useEffect(() => {
+		async function load() {
+			await db.collection('settings').doc(process.env.SETTINGS_ID).get().then(doc => {
+				setSettings(doc.data())
+			})
+		}
+
+		load()
+	}, [])
+
 	const cols = [
-		{title: 'Адрес', text: ['ул. Хрещатик, 1а,', 'Київ, Україна']},
-		{title: 'Години роботи', text: ['ПН–ПТ: 12:00–23:00', 'СБ и ВС: 11:00–00:00']},
-		{title: 'Контакти', text: ['+38(097)-30-123-29', 'info@mysite.ru']},
+		{title: 'Адрес', text: settings.address},
+		{title: 'Години роботи', text: settings.hours},
+		{title: 'Контакти', text: settings.contacts},
 	]
 
 	return (
@@ -13,11 +27,11 @@ export default function Footer() {
 				{cols.map((col, index) =>
 					<div className={classes.col} key={index}>
 						<h6>{col.title}</h6>
-						<p>{col.text.join('\n')}</p>
+						<p>{col.text}</p>
 					</div>
 				)}
 			</div>
-			<p className={classes.copyright}>&copy; {new Date().getFullYear()} Міська пекарня</p>
+			<p className={classes.copyright}>{settings.copyright}</p>
 		</footer>
 	)
 }

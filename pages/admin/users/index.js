@@ -22,7 +22,6 @@ export default function Users({users: serverUsers, orders}) {
 		'Місце проживання',
 		'Останнє замовлення',
 		'Адміністратор',
-		''
 	]
 
 	const [users, setUsers] = useState(serverUsers)

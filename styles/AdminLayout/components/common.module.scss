@@ -1,7 +1,7 @@
 @import "styles/utils/mixins";
 @import "styles/utils/variables";
-@import "styles/utils/colors";
-@import "styles/AdminLayout/components/flex";
+@import "../../utils/colors.module";
+@import "flex.module";
 
 .show {
     display: block;
@@ -179,23 +179,6 @@
         &:last-child {
             padding-right: 24px;
             border-radius: 0 4px 4px 0;
-        }
-    }
-}
-
-.detailList {
-
-    .dlItem {
-        padding: 12px 0;
-        display: flex;
-        justify-content: space-between;
-
-        .dlLabel {
-            color: $grey500;
-        }
-
-        .dlValue {
-            font-weight: 500;
         }
     }
 }

@@ -209,7 +209,7 @@ export default function OrderItem({products, sum, customer, toggleModal, clearCa
 					actions={{
 						onClick: () => {}
 					}}
-					block
+					styles={{block: true}}
 				>Підтвердити</Button>
 			</ModalFooter>
 		</form>
