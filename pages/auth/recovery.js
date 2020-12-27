@@ -8,6 +8,7 @@ import {alertContext} from '../../context/alert/alertContext'
 import Link from 'next/link';
 import {loadingContext} from '../../context/loading/loadingContext';
 import Button from '../../components/MainLayout/Button';
+import Alert from '../../components/Alert';
 
 export default function Recovery() {
 	const {register, handleSubmit, errors} = useForm()
@@ -32,6 +33,7 @@ export default function Recovery() {
 
 	return (
 		<MainLayout>
+			<Alert />
 			<div className={classes.page}>
 				<div className={classes.sticker}>
 					<h5>Відновлення паролю</h5>
@@ -57,17 +59,16 @@ export default function Recovery() {
 							>{errors.email ? errors.email.message : ''}</span>
 						</div>
 						<Button
-							text={'Відновити'}
 							loading={loading}
-							styles={[classes.btn, classes.btnPrimary]}/>
+						>Відновити</Button>
 					</form>
 					<div className={classes.block}>
 						<p>Нічого не забували?</p>
-						<Link href={'/auth/login'}>
-							<a className={`${classes.btnBlock} ${classes.btnPrimary}`}>
-								Увійти
-							</a>
-						</Link>
+						<Button
+							tag="a"
+							link={{href: '/auth/login'}}
+							styles={{block: true}}
+						>Увійти</Button>
 					</div>
 				</div>
 			</div>

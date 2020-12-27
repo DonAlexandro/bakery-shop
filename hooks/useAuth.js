@@ -12,7 +12,7 @@ export const AuthProvider = ({children}) => {
 export const useAuth = () => useContext(authContext)
 
 export const useAuthProvider = () => {
-	const [user, setUser] = useState(null)
+	const [user, setUser] = useState({})
 
 	const createUser = user => {
 		return db.collection('users').doc(user.id).set(user)
@@ -63,9 +63,8 @@ export const useAuthProvider = () => {
 
 	const handleAuthStateChanged = user => {
 		setUser(user)
-		if (user) {
-			getUserAdditionalData(user)
-		}
+
+		if (user) getUserAdditionalData(user)
 	}
 
 	useEffect(() => {

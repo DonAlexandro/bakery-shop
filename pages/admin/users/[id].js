@@ -4,7 +4,7 @@ import PageHeader, {Title, Tools} from '../../../components/AdminLayout/PageHead
 import Button from '../../../components/AdminLayout/Button';
 import Card from '../../../components/AdminLayout/Card';
 import {Col6, Row} from '../../../components/Grid';
-import DetailList, {Item} from '../../../components/AdminLayout/DetailList';
+import DetailList, {Item} from '../../../components/DetailList';
 import {dateFormat} from '../../../utils/dateFormat';
 import TableList, {ListBody} from '../../../components/AdminLayout/TableList';
 import UserOrderItem from '../../../components/AdminLayout/TableList/UserOrderItem';

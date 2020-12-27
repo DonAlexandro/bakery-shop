@@ -14,7 +14,8 @@ export default function Button({children, styles = {}, tag = 'button', link, loa
 	}
 
 	const sizes = {
-		sm: button.btnSm
+		sm: button.btnSm,
+		lg: button.btnLg
 	}
 
 	const attrs = {

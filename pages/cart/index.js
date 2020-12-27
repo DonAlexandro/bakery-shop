@@ -88,7 +88,7 @@ export default function Cart() {
 							</CartList>
 							<CartSum sum={cartSum}/>
 							<Button
-								block
+								styles={{block: true}}
 								actions={{
 									onClick: () => toggleModal(true)
 								}}

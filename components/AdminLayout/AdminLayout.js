@@ -8,9 +8,9 @@ import {
 	faImage, faTruck, faArrowLeft, faClipboardList
 } from '@fortawesome/free-solid-svg-icons'
 import Navbar from './Navbar';
-// import {useRequireAuth} from '../../hooks/useRequireAuth';
 import classes from '../../styles/AdminLayout/components/adminLayout.module.scss'
 import Header from './Header';
+import {useRequireAuth} from '../../hooks/useRequireAuth';
 
 library.add(
 	faBars, faThLarge, faShoppingBag, faBoxes, faUsers,
@@ -21,9 +21,8 @@ library.add(
 )
 
 export default function AdminLayout({children, title = 'Сторінка'}) {
-	// const {user} = useRequireAuth()
-	//
-	// if (!user) return null
+	const {user} = useRequireAuth()
+	if (!user || !user.isAdmin) return null
 
 	return (
 		<>

@@ -7,10 +7,10 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     font-size: 14px;
-}
 
-a.btn, a.btnBlock {
-    text-decoration: none;
+    &:hover {
+        text-decoration: none !important;
+    }
 }
 
 .btn {
@@ -31,7 +31,7 @@ a.btn, a.btnBlock {
 
 .btnPrimary {
     background: $orange;
-    color: #fff;
+    color: #fff !important;
     border: none;
 
     &:hover {
@@ -67,6 +67,8 @@ a.btn, a.btnBlock {
 }
 
 .btnBlock {
+    @include center-content;
+
     width: 100%;
     height: 36px;
 }

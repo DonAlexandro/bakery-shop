@@ -28,9 +28,9 @@ export default function Login() {
 				showAlert(response.error.message, 'error')
 				hideLoading()
 			} else {
-				showAlert('Раді вас бачити!', 'success')
+				showAlert('Раді вас бачити!', 'success', true)
 				router.push('/auth/profile')
-				setTimeout(() => hideLoading(), 1500)
+				setTimeout(() => hideLoading(), 2000)
 			}
 		})
 	}
@@ -97,11 +97,15 @@ export default function Login() {
 					</form>
 					<div className={classes.block}>
 						<p>Ще не маєте облікового запису?</p>
-						<Link href={'/auth/register'}>
-							<a className={`${classes.btnBlock} ${classes.btnPrimary}`}>
-								Зареєструватися
-							</a>
-						</Link>
+						<Button
+							tag="a"
+							link={{
+								href: '/auth/register'
+							}}
+							styles={{
+								block: true
+							}}
+						>Зареєструватися</Button>
 					</div>
 				</div>
 			</div>

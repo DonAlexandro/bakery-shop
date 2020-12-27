@@ -24,9 +24,28 @@
     color: $base-color;
 }
 
+.textWhite {
+    color: #fff !important;
+}
+
 .bgPrimary {
     color: #fff;
     background: $primary-color;
+}
+
+.bgPrimaryPale {
+    color: $primary-color;
+    background: $pale_primary-color;
+}
+
+.bgInfoPale {
+    color: $info-color;
+    background: $pale_info-color;
+}
+
+.bgPinkPale {
+    color: $pink;
+    background: $pale-pink;
 }
 
 .bgSuccess {

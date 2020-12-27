@@ -35,24 +35,6 @@ export default function UserItem({user, index, actions}) {
 			<ListCol>{`${user.region} обл., ${user.city}`}</ListCol>
 			<ListCol>{date}</ListCol>
 			<ListCol><Badge color={user.isAdmin ? 'success' : 'warning'}>{user.isAdmin ? 'Так' : 'Ні'}</Badge></ListCol>
-			<ListColIcon>
-				<DropdownLayout>
-					<Button
-						styles={{
-							size: 'sm',
-							color: 'outlineLight',
-							transparent: true
-						}}
-						actions={{onClick: () => setDropdown(prev => !prev)}}
-					><FontAwesomeIcon icon="ellipsis-h" /></Button>
-					{dropdown && <SmallMenu right>
-						<LinksListItem
-							icon="clipboard-list"
-							toggleDropdown={toggleDropdown}
-						>Замовлення</LinksListItem>
-					</SmallMenu>}
-				</DropdownLayout>
-			</ListColIcon>
 		</TableListItem>
 	)
 }
