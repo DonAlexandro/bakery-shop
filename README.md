@@ -5,11 +5,11 @@ Also, I've used Firebase for back-end.
 
 ### Available scripts
 
-### `npm run dev`
+#### `npm run dev`
 Starts the development server on [http://localhost:3000](http://localhost:3000)
 
-### `npm run build`
+#### `npm run build`
 Builds minified production version of the app
 
-### `npm run start`
+#### `npm run start`
 Builds development version of the app once
