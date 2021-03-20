@@ -3,7 +3,7 @@
 This online shop I've written using NextJS - SSR framework for ReactJS.
 Also, I've used Firebase for back-end.
 
-### Available scripts
+## Available scripts
 
 #### `npm run dev`
 Starts the development server on [http://localhost:3000](http://localhost:3000)
